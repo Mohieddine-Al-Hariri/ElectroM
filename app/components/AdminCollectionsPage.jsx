@@ -728,7 +728,7 @@ const AdminCollectionsPage = ({
     <div className="h-full bgColor fontColor p-4 gap-6 flex flex-col overflow-y-scroll overflow-x-hidden pb-14 ">
       <button
         onClick={handleRefresh}
-        className=" hover:bg-white hover:text-black border-white border-2 duration-75 text-white font-bold py-2 px-4 rounded max-h-12 self-center"
+        className=" hover:bg-white hover:text-black border-white border-2 duration-200 transition-colors text-white font-bold py-2 px-4 rounded max-h-12 self-center"
         disabled={isRefreshing} // Disable the button when refreshing
         title={isRefreshing ? "Refreshing..." : "Refresh"}
       >

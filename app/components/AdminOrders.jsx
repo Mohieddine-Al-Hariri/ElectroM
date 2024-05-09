@@ -298,7 +298,7 @@ const AdminOrders = ({ orders, hasNextPage, searchText, filteredState }) => {
           />
           <button
             onClick={handleRefresh}
-            className=" hover:bg-white hover:text-black border-white border-2 duration-75 text-white font-bold py-2 px-4 rounded max-h-12 self-center"
+            className=" hover:bg-white hover:text-black border-white border-2 duration-200 transition-colors text-white font-bold py-2 px-4 rounded max-h-12 self-center"
             disabled={isRefreshing} // Disable the button when refreshing
             title={isRefreshing ? "Refreshing..." : "Refresh"}
           >

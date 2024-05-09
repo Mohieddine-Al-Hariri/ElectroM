@@ -10,7 +10,7 @@ import {
 } from "@/lib";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { SVGLoading, SVGTrash } from ".";
+import { SVGLoading, SVGRefresh, SVGTrash } from ".";
 import toast, { Toaster } from "react-hot-toast";
 import Swal from "sweetalert2";
 
@@ -24,15 +24,20 @@ export const OrderButton = ({
   setSubmitting,
   setSelectedItemsIds,
   itemsNames,
-  setError
+  setError,
 }) => {
   const router = useRouter();
-
 
   const orderItems = async () => {
     setSubmitting(true);
     try {
-      const submittedOrder = await submitOrder({ userId, totalPrice, itemsIds, cartId, itemsNames });
+      const submittedOrder = await submitOrder({
+        userId,
+        totalPrice,
+        itemsIds,
+        cartId,
+        itemsNames,
+      });
       await publishOrder(submittedOrder.createOrder.id);
       router.refresh();
       setSubmitting(false);
@@ -40,7 +45,6 @@ export const OrderButton = ({
         duration: 5000,
       });
       setSelectedItemsIds([]);
-
     } catch (error) {
       setSubmitting(false);
       setError(true);
@@ -48,27 +52,29 @@ export const OrderButton = ({
         setError(false);
       }, 3000);
     }
-    
   };
 
   return (
-    <div className="pb-20 " >
+    <div className="pb-20 ">
       <button
         disabled={!itemsIds.length || isSubmitting}
         onClick={orderItems}
         className={`w-[343px] h-[50px] px-4 py-2  ${
-          itemsIds.length  ? "bg-[#4bc0d9] text-white hover:bg-[#3ca8d0]" : "bg-gray-300"
+          itemsIds.length
+            ? "bg-[#4bc0d9] text-white hover:bg-[#3ca8d0]"
+            : "bg-gray-300"
         }  rounded-lg border-black justify-around items-center gap-[3px] flex`}
       >
         <div className=" text-center text-[23px] font-semibold flex items-center gap-4">
           <h2 className="flex">
-            {isSubmitting 
-            ? 
+            {isSubmitting ? (
               <>
-                <SVGLoading/>
+                <SVGLoading />
                 Submitting...
               </>
-            : "Order"}
+            ) : (
+              "Order"
+            )}
           </h2>
           <svg
             width="24px"
@@ -123,22 +129,26 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
   const [selectAll, setSelectAll] = useState(false);
   const [error, setError] = useState(false);
   const [items, setItems] = useState([]);
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   const router = useRouter();
-//TODO: allow user to see product details when clicking on an item
+  //TODO: allow user to see product details when clicking on an item
   useEffect(() => {
     const isDarkModeLocal = JSON.parse(localStorage.getItem("isDarkMode"));
-    if(isDarkModeLocal) document.body.classList.add('dark');
-    else document.body.classList.remove('dark');
+    if (isDarkModeLocal) document.body.classList.add("dark");
+    else document.body.classList.remove("dark");
     const localCart = JSON.parse(localStorage.getItem("cart"));
     // console.log(localCart)
-    if(!user) setItems(localCart)
-    else setItems(cartItems)
-  }, [cartItems])
+    if (!user) setItems(localCart);
+    else setItems(cartItems);
+  }, [cartItems]);
 
   useEffect(() => {
-    if(selectedItemsIds.length === items?.length && items?.length > 0) setSelectAll(true);
+    if (selectedItemsIds.length === items?.length && items?.length > 0)
+      setSelectAll(true);
     else setSelectAll(false);
-  }, [selectedItemsIds])
+  }, [selectedItemsIds]);
 
   const deleteItem = async (itemId) => {
     setError(false);
@@ -154,7 +164,7 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
         }
       } else {
         // If authenticated, remove the item from the user's cart
-        await removeItemfromCart(itemId);;
+        await removeItemfromCart(itemId);
         // Refresh the router to reflect changes
         router.refresh();
         // Update the state with the latest cart items (assuming "cartItems" is updated elsewhere)
@@ -162,30 +172,38 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
       }
     } catch (error) {
       // Handle errors that may occur during item deletion (e.g., network errors)
-      console.error('Error deleting item:', error);
+      console.error("Error deleting item:", error);
       // Set an error flag or perform error handling as needed
       setError(true);
     }
+  };
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    router.refresh();
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 500);
   };
 
   // console.log(selectAll)
   const selectAllItems = async () => {
     if (!selectAll) setSelectedItemsIds(items.map((item) => item.id));
     else setSelectedItemsIds([]);
-    setSelectAll(prev => !prev);
+    setSelectAll((prev) => !prev);
   };
   const deleteSelectedItems = async () => {
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "All selected items will be deleted",
-      icon: 'warning',
+      icon: "warning",
       iconColor: "#4bc0d9",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-      customClass: "staticBgColor fontColorGray"      
-    }).then(async(result) => {
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      customClass: "staticBgColor fontColorGray",
+    }).then(async (result) => {
       if (result.isConfirmed) {
         try {
           if (!user) {
@@ -195,40 +213,43 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
               let updatedCart = localCart;
               selectedItemsIds.forEach((itemId) => {
                 updatedCart = updatedCart.filter((item) => item.id !== itemId);
-              })
+              });
               localStorage.setItem("cart", JSON.stringify(updatedCart));
               setItems(updatedCart);
             }
-          }
-          else{
+          } else {
             setIsDeleting(true);
             await deleteManyItems(selectedItemsIds);
             router.refresh();
           }
 
           setSelectedItemsIds([]);
-          toast.success(`${selectedItemsIds.length === 1 ? "Item was" : "Items where"} deleted succefully. \nIf you can still see them, try refreshing the page.`, {
-            duration: 5000,
-            icon: <SVGTrash className="text-[#4bc0d9]  w-[32px]"/>,
-            //TODO: Learn how to use animation.json + implement it
-          });
+          toast.success(
+            `${
+              selectedItemsIds.length === 1 ? "Item was" : "Items where"
+            } deleted succefully. \nIf you can still see them, try refreshing the page.`,
+            {
+              duration: 5000,
+              icon: <SVGTrash className="text-[#4bc0d9]  w-[32px]" />,
+              //TODO: Learn how to use animation.json + implement it
+            }
+          );
           setIsDeleting(false);
-
         } catch (error) {
           toast.error(`Something went wrong, please try again.`, {
             duration: 4000,
           });
-          console.log(error)
+          console.log(error);
           setIsDeleting(false);
         }
       }
-    })
-  }
-  
+    });
+  };
+
   return (
     <div className="flex flex-col items-center justify-between p-4 pb-10 h-screen w-screen bgColor fontColor overflow-y-scroll overflow-x-hidden">
       <div className="w-screen fontColor pb-5 ">
-        <Toaster/>
+        <Toaster />
         <h1 className=" text-2xl font-bold text-center py-8 ">Cart</h1>
         {isOrderSubmitted && (
           <div className="text-3xl w-full h-full flex flex-col justify-center items-center text-center">
@@ -236,49 +257,80 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
             <h2>You can track it in your profile</h2>
           </div>
         )}
-        
-        <div className={`w-full transition-transform ${submitting ? 'h-[200px]' : 'h-0'}`}>
-          <h1 className={`text-3xl w-full h-[200px] transition duration-200 ${submitting ? 'scale-100' : 'scale-0'} flex flex-col justify-center items-center text-[#4bc0d9]`}>
+
+        <div
+          className={`w-full transition-transform ${
+            submitting ? "h-[200px]" : "h-0"
+          }`}
+        >
+          <h1
+            className={`text-3xl w-full h-[200px] transition duration-200 ${
+              submitting ? "scale-100" : "scale-0"
+            } flex flex-col justify-center items-center text-[#4bc0d9]`}
+          >
             Submitting...
-            <SVGLoading/>
+            <SVGLoading />
           </h1>
         </div>
 
         {!submitting && (
-          <React.Fragment >
-            <h3 className="p-4 pb-2 text-2xl font-semibold fontColorGray border-b border-gray-300">
-              {items?.length === 1 ? `${items?.length} Item` : `${items?.length} Items`}
+          <React.Fragment>
+            <h3 className="p-4 pb-2 text-2xl font-semibold fontColorGray border-b border-gray-300 flex justify-between items-end max-[190px]:flex-col">
+              <span>
+                {items?.length === 1
+                  ? `${items?.length} Item`
+                  : `${items?.length} Items`}
+              </span>
+
+              <button
+                onClick={handleRefresh}
+                className=" hover:bg-white hover:text-black border-white border-2 duration-200 transition-colors text-white font-bold py-[6px] px-3 rounded"
+                disabled={isRefreshing} // Disable the button when refreshing
+                title={isRefreshing ? "Refreshing..." : "Refresh"}
+              >
+                {isRefreshing ? (
+                  <SVGLoading className="w-5 h-5 inline " />
+                ) : (
+                  <SVGRefresh title="Refresh" className="w-5 h-5 inline " />
+                )}
+              </button>
             </h3>
             {items?.length > 0 && (
-              <div className={`flex items-center gap-4 pl-4 py-2 ${selectedItemsIds.length > 0 ? "bg-[#4bc0d9]" : "bg-gray-100"} rounded-md shadow-md mt-4 mb-2`}>
-                <label className="flex items-center gap-2 text-gray-600 cursor-pointer" htmlFor="selectAll">
+              <div
+                className={`flex items-center gap-4 pl-4 py-2 ${
+                  selectedItemsIds.length > 0 ? "bg-[#4bc0d9]" : "bg-gray-100"
+                } rounded-md shadow-md mt-4 mb-2`}
+              >
+                <label
+                  className="flex items-center gap-2 text-gray-600 cursor-pointer"
+                  htmlFor="selectAll"
+                >
                   <input
                     type="checkbox"
                     id="selectAll"
                     name="selectAll"
                     onChange={selectAllItems}
                     checked={selectAll}
-                    className="text-[#4bc0d9] rounded"
+                    className="text-[#4bc0d9] rounded cursor-pointer"
                   />
                   <span className="text-lg font-semibold">
                     {selectedItemsIds.length} Items Selected
                   </span>
                 </label>
-                
-                {selectedItemsIds.length > 0 && 
-                  <button disabled={isDeleting} onClick={() => deleteSelectedItems()} className="hover:text-red-500 transition duration-100 cursor-pointer " >
-                    {isDeleting ? 
-                      <SVGLoading/>
-                      :
-                      <SVGTrash />
-                    }
+
+                {selectedItemsIds.length > 0 && (
+                  <button
+                    disabled={isDeleting}
+                    onClick={() => deleteSelectedItems()}
+                    className="hover:text-red-500 transition duration-100 cursor-pointer "
+                  >
+                    {isDeleting ? <SVGLoading /> : <SVGTrash />}
                   </button>
-                }
+                )}
                 {/* You can add more interactive elements or content here */}
               </div>
             )}
           </React.Fragment>
-
         )}
         {items?.length > 0 ? (
           <div className="flex max-lg:flex-col gap-2 px-2 lg:flex-wrap ">
@@ -298,15 +350,21 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
           </div>
         ) : (
           <div className="w-full h-full flex flex-col justify-center items-center text-center gap-2 px-2 ">
-            <h1 className="text-3xl ">
-              No Items in Cart
-            </h1>
-            {user && <p>If your Item isn't showing, please wait a minute and refresh</p>}
+            <h1 className="text-3xl ">No Items in Cart</h1>
+            {user && (
+              <p>
+                If your Item isn't showing, please wait a minute and refresh
+              </p>
+            )}
           </div>
         )}
       </div>
       {/* keep btn & "Cart" fixed while scrolling between items? */}
-      {error && <p className="text-red-500">Something went wrong... plz try again later</p>}
+      {error && (
+        <p className="text-red-500">
+          Something went wrong... plz try again later
+        </p>
+      )}
       {cartItems?.length > 0 ? (
         <OrderButton
           isSubmitting={submitting}
@@ -316,12 +374,14 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
           userId={user?.id}
           totalPrice={
             items
-              .filter(item => selectedItemsIds.includes(item.id)) // Filter items with matching IDs
+              .filter((item) => selectedItemsIds.includes(item.id)) // Filter items with matching IDs
               .reduce((acc, item) => acc + item.total, 0) // Calculate total price for filtered items
           }
           // totalPrice={items?.reduce((acc, item) => acc + item.total, 0)}
           itemsIds={selectedItemsIds}
-          itemsNames={items?.filter(item => selectedItemsIds.includes(item.id))?.map(item => item.product.name)}
+          itemsNames={items
+            ?.filter((item) => selectedItemsIds.includes(item.id))
+            ?.map((item) => item.product.name)}
           setSelectedItemsIds={setSelectedItemsIds}
           setError={setError}
         />
