@@ -48,7 +48,7 @@ export async function POST(req) {
       `,
       { itemsIds: itemsIds.map((id) => ({ id })), itemsIds2: itemsIds, userId, totalPrice, cartId, itemsNames }
     );
-    console.log("submittedOrder: ", submittedOrder.publishManyOrderItems);
+    // console.log("submittedOrder: ", submittedOrder.publishManyOrderItems);
 
     return new Response(JSON.stringify(submittedOrder)); // Should return the id
   } catch (error) {

@@ -87,7 +87,7 @@ const StartPage = ({ products, hasNextPage, user, searchText, categoriesData, se
       setIsDarkMode(false);
     }
     const localCart = JSON.parse(localStorage.getItem("cart"));
-    console.log(localCart)
+    // console.log(localCart)
     if(user && localCart){
       addItemsToCart(localCart);
     }

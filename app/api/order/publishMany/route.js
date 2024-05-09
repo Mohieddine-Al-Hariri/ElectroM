@@ -7,7 +7,7 @@ export async function POST(req) {
       authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
     },
   });
-  console.log("ordersIds in post: ", ordersIds);
+
   try {
     const publishedOrders = await client.request(
       `

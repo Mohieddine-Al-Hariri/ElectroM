@@ -10,7 +10,6 @@ const ReviewsPage = ({ orderData, userId }) => {
   const [removedItems, setRemovedItems] = useState([]);
 
   const submitReview = async (body, isCollection, isLastItem) => {
-    console.log("isLastItem: ", isLastItem);
     if(isCollection){
       const reviewedCollection = await reviewCollection(body)
       await publishReview(reviewedCollection.reviews[reviewedCollection.reviews.length - 1].id)

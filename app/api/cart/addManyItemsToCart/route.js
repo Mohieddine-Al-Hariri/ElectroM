@@ -11,10 +11,8 @@ export async function POST(req) {
   });
   try {
     const { cartId, items, userId } = body;
-    console.log(items) 
-    console.log(items.length) 
-    const names= items.map(item => item.orderItemVariants.create).flat()
-    console.log(names) 
+    // const names= items.map(item => item.orderItemVariants.create).flat()
+
     const updatedCart = await client.request(
       `
         mutation updateCart(
@@ -45,7 +43,6 @@ export async function POST(req) {
     //   count
     // }
 
-console.log(updatedCart);
 
     return new Response(JSON.stringify(updatedCart.updateCart));
   

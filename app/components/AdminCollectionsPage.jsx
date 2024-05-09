@@ -9,7 +9,7 @@ import CreateCollectionForm from "./CreateCollectionForm";
 import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "@/lib/firebaseConfig";
 import { v4 } from "uuid";
-import { SVGCancel, SVGCheck, SVGDefault, SVGLoading, SVGPencil, SVGTrash, SVGX, SelectionProductCard } from ".";
+import { SVGCancel, SVGCheck, SVGDefault, SVGLoading, SVGPencil, SVGRefresh, SVGTrash, SVGX, SelectionProductCard } from ".";
 import Swal from "sweetalert2";
 
 export const CollectionStateMenu = ({
@@ -373,7 +373,7 @@ const CollectionCard = ({
     <div
       className={`border-2 ${
         show ? "borderColor fontColor" : "border-gray-500 fontColorGray"
-      } rounded-lg p-2`}
+      } rounded-lg p-2 w-full max-[1400px]:max-w-[730px] min-[1400px]:w-[730px] grow`}
     >
       <div
         className={` p-2 flex max-sm:flex-col-reverse ${
@@ -640,6 +640,9 @@ const AdminCollectionsPage = ({
   const [productsPageNumber, setProductsPageNumber] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
   const [isFirstRender, setIsFirstRender] = useState(true);
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -708,6 +711,14 @@ const AdminCollectionsPage = ({
     }, 1000);
   };
 
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    router.refresh();
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 500);
+  };
+
   const deleteACollection = async (collectionId) => {
     await deleteCollection(collectionId);
     router.refresh();
@@ -715,7 +726,19 @@ const AdminCollectionsPage = ({
 
   return (
     <div className="h-full bgColor fontColor p-4 gap-6 flex flex-col overflow-y-scroll overflow-x-hidden pb-14 ">
-      <div className=" flex gap-4 flex-col ">
+      <button
+        onClick={handleRefresh}
+        className=" hover:bg-white hover:text-black border-white border-2 duration-75 text-white font-bold py-2 px-4 rounded max-h-12 self-center"
+        disabled={isRefreshing} // Disable the button when refreshing
+        title={isRefreshing ? "Refreshing..." : "Refresh"}
+      >
+        {isRefreshing ? (
+          <SVGLoading className="w-6 h-6 inline " />
+        ) : (
+          <SVGRefresh title="Refresh" className="w-6 h-6 inline" />
+        )}
+      </button>
+      <div className=" flex gap-4 max-[1400px]:flex-col items-center flex-wrap">
         {collectionsData.map((collection, index) => (
           <CollectionCard
             key={`${index}: ${collection.node.id}`}

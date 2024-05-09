@@ -8,6 +8,7 @@ import {
   AdminProductCard,
   FilterSelect,
   SVGLoading,
+  SVGRefresh,
   SVGTrash,
   ScrollButton,
 } from ".";
@@ -69,12 +70,13 @@ const AdminProductsPage = ({
 
   const [deletedProductId, setDeletedProductId] = useState(null);
 
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   const router = useRouter();
 
   const topRef = useRef(null);
   const isTopButtonVisible = useIsVisible(topRef);
 
-  console.log("selectedProducts: ", selectedProducts);
 
   useEffect(() => {
     const isDarkModeLocal = JSON.parse(localStorage.getItem("isDarkMode"));
@@ -158,6 +160,14 @@ const AdminProductsPage = ({
     }
   };
 
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    router.refresh();
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 500);
+  };
+
   const deleteProductFromDb = async (
     productId,
     imageUrls,
@@ -166,45 +176,21 @@ const AdminProductsPage = ({
     ordersIds
   ) => {
     setIsDeleting(true);
-          imageUrls?.length > 0 && (await deleteProductImages(imageUrls));
-          const deletedProduct = await deleteProduct({
-            productId,
-            imageUrls,
-            orderItemsIds,
-            reviewsIds,
-          });
-          await publishManyOrders(ordersIds.map((order) => order.order.id));
-          setSelectedProducts((prev) =>
-            prev.filter((product) => product.id !== productId)
-          );
+    imageUrls?.length > 0 && (await deleteProductImages(imageUrls));
+    const deletedProduct = await deleteProduct({
+      productId,
+      imageUrls,
+      orderItemsIds,
+      reviewsIds,
+    });
+    await publishManyOrders(ordersIds.map((order) => order.order.id));
+    setSelectedProducts((prev) =>
+      prev.filter((product) => product.id !== productId)
+    );
 
-          
-          router.refresh();
-          setDeletedProductId(deletedProduct.id);
-          setIsDeleting(false);
-    // Swal.fire({
-    //   title: "Are you sure?",
-    //   text: "Selected Item will be deleted permenantaly!",
-    //   icon: "warning",
-    //   iconColor: "#4bc0d9",
-    //   showCancelButton: true,
-    //   confirmButtonColor: "#3085d6",
-    //   cancelButtonColor: "#d33",
-    //   confirmButtonText: "Yes, delete it!",
-    //   customClass: "staticBgColor fontColorGray",
-    // }).then(async (result) => {
-    //   if (result.isConfirmed) {
-    //     try {
-          
-    //     } catch (error) {
-    //       toast.error(`Something went wrong, please try again.`, {
-    //         duration: 4000,
-    //       });
-    //       console.log(error);
-    //       setIsDeleting(false);
-    //     }
-    //   }
-    // });
+    router.refresh();
+    setDeletedProductId(deletedProduct.id);
+    setIsDeleting(false);
   };
   const deleteManyProductsFromDb = async () => {
     if (selectedProducts.length === 0) return;
@@ -337,6 +323,18 @@ const AdminProductsPage = ({
                 filterBy="Collection"
                 setResetSearchText={setResetSearchText}
               />
+              <button
+                onClick={handleRefresh}
+                className=" hover:bg-white hover:text-black border-white border-2 duration-75 text-white font-bold py-2 px-4 rounded"
+                disabled={isRefreshing} // Disable the button when refreshing
+                title={isRefreshing ? "Refreshing..." : "Refresh"}
+              >
+                {isRefreshing ? (
+                  <SVGLoading className="w-6 h-6 inline " />
+                ) : (
+                  <SVGRefresh title="Refresh" className="w-6 h-6 inline " />
+                )}
+              </button>
               <div
                 // TODO: FIX design
                 className={`relative ${

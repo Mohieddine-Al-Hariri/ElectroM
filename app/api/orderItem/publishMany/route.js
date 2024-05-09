@@ -2,14 +2,13 @@ import { GraphQLClient } from "graphql-request";
 
 export async function POST(req) { //TODO: FIX
   const itemsIds = await req.json();
-  // const userId = await req.json();
+
   const client = new GraphQLClient(process.env.GRAPHYL_ENDPOINT, {
     headers: {
       authorization: `Bearer ${process.env.HYGRAPH_MUTATION_TOKEN}`,
     },
   });
-  const itemsIds2= itemsIds.map((item) => (item.id))
-  console.log("itemsIds2: ", itemsIds)
+
 
   try {
     const publishedItems = await client.request(
@@ -33,7 +32,7 @@ export async function POST(req) { //TODO: FIX
   //     `,
   //     { userId }
   //   );
-    console.log(publishedItems)
+    // console.log(publishedItems)
 
     //   const queryParts = itemsIds.map((id) => `
     //     publishOrderItem(where: {id: "${id.id}"}, to: PUBLISHED) {

@@ -309,7 +309,6 @@ export const VariantsForm = ({ selectedPills, setSelectedPills, productData }) =
 }
 
 const UpdateProductForm = ({ categoriesData, productData, collectionsData }) => {
-  console.log("productData: ", productData);
   const productCategoriesIds = productData?.categories?.map(
     (category) => category.id
   );

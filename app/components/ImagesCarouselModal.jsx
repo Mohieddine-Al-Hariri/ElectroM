@@ -63,7 +63,6 @@ const ImagesCarouselModal = ({ product, imageIndex, setImageIndex }) => {
       items: 2,
     },
   };
-  console.log(imageIndex)
 
   return (
     <div className="relative max-sm:w-full px-3 w-[428px] inline-block ">

@@ -130,7 +130,7 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
     if(isDarkModeLocal) document.body.classList.add('dark');
     else document.body.classList.remove('dark');
     const localCart = JSON.parse(localStorage.getItem("cart"));
-    console.log(localCart)
+    // console.log(localCart)
     if(!user) setItems(localCart)
     else setItems(cartItems)
   }, [cartItems])
@@ -168,7 +168,7 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
     }
   };
 
-  console.log(selectAll)
+  // console.log(selectAll)
   const selectAllItems = async () => {
     if (!selectAll) setSelectedItemsIds(items.map((item) => item.id));
     else setSelectedItemsIds([]);

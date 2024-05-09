@@ -9,18 +9,28 @@ import {
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import CreateCategoryForm from "./CreateCategoryForm";
-import { SVGCancel, SVGCheck, SVGLoading, SVGPencil, SVGTrash, SelectionProductCard } from ".";
+import {
+  SVGCancel,
+  SVGCheck,
+  SVGLoading,
+  SVGPencil,
+  SVGRefresh,
+  SVGTrash,
+  SelectionProductCard,
+} from ".";
 import Swal from "sweetalert2";
 
 export const ButtonSVG = ({ func, text, svg, hoverColor }) => (
   <button
-    className={`flex justify-between items-center max-sm:w-fit max-sm:flex-col w-full ${hoverColor ? `hover:${hoverColor}` : "hover:text-[#4bc0d9]"}` }
+    className={`flex justify-between items-center max-sm:w-fit max-sm:flex-col w-full ${
+      hoverColor ? `hover:${hoverColor}` : "hover:text-[#4bc0d9]"
+    }`}
     onClick={func}
   >
     {text}
     {svg}
   </button>
-)
+);
 
 const CategoryCard = ({
   category,
@@ -153,15 +163,16 @@ const CategoryCard = ({
         setIsError(false);
       }, 2000);
       return;
-    };
-    
+    }
+
     // Initialize a variable to track if all products in includedProducts are the same as products in category.products
     const areAllProductsSame = includedProducts.every((includedProduct) =>
-    // Check if there is at least one product in category.products with the same id as the current includedProduct
-    category.products.some((product) => includedProduct.id === product.id)
+      // Check if there is at least one product in category.products with the same id as the current includedProduct
+      category.products.some((product) => includedProduct.id === product.id)
     );
 
-    if ( //Make sure something is changed before submission
+    if (
+      //Make sure something is changed before submission
       categoryName === category.name &&
       description === category.description &&
       prevIncludedProducts.length === 0 &&
@@ -238,9 +249,11 @@ const CategoryCard = ({
         show ? "borderColor fontColor" : "border-gray-500 fontColorGray"
       } rounded-lg p-2`}
     >
-      <div className={` flex justify-between ${
-        updatingCategoryName ? "max-sm:flex-col-reverse gap-2 mb-2" : ""
-      } `}>
+      <div
+        className={` flex justify-between ${
+          updatingCategoryName ? "max-sm:flex-col-reverse gap-2 mb-2" : ""
+        } `}
+      >
         <div>
           {updatingCategoryName ? (
             <div className="flex flex-col justify-around items-center h-full">
@@ -275,30 +288,36 @@ const CategoryCard = ({
           )}
         </div>
         {isError && <p className="text-red-500">Please provide a name </p>}
-        
+
         <div
           className={`flex gap-4 items-start ${
-            updatingCategoryName ? "sm:flex-col max-sm:flex-wrap sm:w-1/6 w-full max-sm:justify-evenly items-end" : ""
+            updatingCategoryName
+              ? "sm:flex-col max-sm:flex-wrap sm:w-1/6 w-full max-sm:justify-evenly items-end"
+              : ""
           }`}
         >
           {updatingCategoryName ? (
             isUpdating ? (
-              <SVGLoading/>
+              <SVGLoading />
             ) : (
-              <ButtonSVG func={updateCategoryDetails} text="Submit" svg={<SVGCheck/>} />
+              <ButtonSVG
+                func={updateCategoryDetails}
+                text="Submit"
+                svg={<SVGCheck />}
+              />
             )
           ) : (
             <button onClick={() => setUpdatingCategoryName(true)}>
-              <SVGPencil className="hover:text-[#4bc0d9]"/>
+              <SVGPencil className="hover:text-[#4bc0d9]" />
             </button>
           )}
           {isUpdatingShow ? (
-            <SVGLoading/>
+            <SVGLoading />
           ) : show ? (
-            <ButtonSVG 
-              func={updateCategoryShowState} 
+            <ButtonSVG
+              func={updateCategoryShowState}
               text={updatingCategoryName ? "Hide" : ""}
-              hoverColor="text-yellow-500" 
+              hoverColor="text-yellow-500"
               svg={
                 <svg
                   fill="currentColor"
@@ -310,13 +329,13 @@ const CategoryCard = ({
                   <title>Hide from user</title>
                   <path d="M10.2 15q-2.512 0 -4.537 -1.462 -2.063 -1.462 -3.262 -3.938 1.2 -2.475 3.262 -3.938 2.025 -1.462 4.537 -1.462 2.4 0 4.5 1.537 2.1 1.5 3.3 3.862 -1.2 2.362 -3.3 3.9 -2.1 1.5 -4.5 1.5Zm0 -1.8q1.5 0 2.55 -1.05t1.05 -2.55q0 -1.5 -1.05 -2.55t-2.55 -1.05q-1.5 0 -2.55 1.05t-1.05 2.55q0 1.5 1.05 2.55t2.55 1.05Zm0 -1.5q-0.862 0 -1.462 -0.6 -0.637 -0.637 -0.637 -1.5t0.637 -1.462q0.6 -0.637 1.462 -0.637t1.5 0.637q0.6 0.6 0.6 1.462t-0.6 1.5q-0.637 0.6 -1.5 0.6Z" />
                 </svg>
-              } 
+              }
             />
           ) : (
-            <ButtonSVG 
-              func={updateCategoryShowState} 
+            <ButtonSVG
+              func={updateCategoryShowState}
               text={updatingCategoryName ? "Show" : ""}
-              hoverColor="text-yellow-500" 
+              hoverColor="text-yellow-500"
               svg={
                 <svg
                   fill="currentColor"
@@ -333,63 +352,74 @@ const CategoryCard = ({
                     <path d="m1.819 0.21 -0.079 -0.079c-0.022 -0.022 -0.064 -0.019 -0.09 0.011l-0.274 0.274C1.252 0.364 1.117 0.337 0.975 0.337 0.551 0.337 0.184 0.585 0.007 0.941c-0.011 0.022 -0.011 0.049 0 0.068 0.083 0.169 0.206 0.307 0.36 0.412l-0.225 0.229c-0.026 0.026 -0.03 0.068 -0.011 0.09l0.079 0.079c0.022 0.022 0.064 0.019 0.09 -0.011L1.808 0.3c0.03 -0.026 0.034 -0.068 0.011 -0.09zM0.563 0.975c0 -0.229 0.184 -0.412 0.412 -0.412 0.075 0 0.142 0.019 0.203 0.052l-0.112 0.112c-0.03 -0.007 -0.06 -0.015 -0.09 -0.015 -0.146 0 -0.263 0.116 -0.263 0.263 0 0.03 0.007 0.06 0.015 0.09l-0.112 0.112C0.581 1.117 0.563 1.05 0.563 0.975z" />
                   </g>
                 </svg>
-              } 
+              }
             />
           )}
           {!updatingCategoryName ? (
             isDeleting ? (
-              <SVGLoading/>
+              <SVGLoading />
             ) : (
               <button onClick={deleteCategoryFunc}>
-                <SVGTrash  className="hover:text-red-500" width="30px" height="30px" />
+                <SVGTrash
+                  className="hover:text-red-500"
+                  width="30px"
+                  height="30px"
+                />
               </button>
             )
           ) : (
             <>
-              <ButtonSVG func={cancelUpdateCategory} text="Cancel" svg={<SVGCancel width="30px" height="30px" />} />
-              <ButtonSVG func={resetCollectionDetailsFunc} text="Default" svg={
-                <svg
-                  id="Layer_1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlnsXlink="http://www.w3.org/1999/xlink"
-                  viewBox="0 0 30 30"
-                  enableBackground="new 0 0 32 32"
-                  xmlSpace="preserve"
-                  width={30}
-                  height={30}
-                >
-                  <path
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={1.875}
-                    strokeMiterlimit={10}
-                    d="M24.094 10.219C22.406 6.938 18.938 4.688 15 4.688c-4.406 0 -8.063 2.719 -9.563 6.563"
-                  />
-                  <path
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={1.875}
-                    strokeMiterlimit={10}
-                    d="M5.813 19.688c1.688 3.281 5.156 5.625 9.188 5.625 4.406 0 8.063 -2.719 9.563 -6.563"
-                  />
-                  <path
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={1.875}
-                    strokeMiterlimit={10}
-                    points="26,5 26,11 20,11 "
-                    d="M24.375 4.688L24.375 10.313L18.75 10.313"
-                  />
-                  <path
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth={1.875}
-                    strokeMiterlimit={10}
-                    points="6,27 6,21 12,21 "
-                    d="M5.625 25.313L5.625 19.688L11.25 19.688"
-                  />
-                </svg>
-                } 
+              <ButtonSVG
+                func={cancelUpdateCategory}
+                text="Cancel"
+                svg={<SVGCancel width="30px" height="30px" />}
+              />
+              <ButtonSVG
+                func={resetCollectionDetailsFunc}
+                text="Default"
+                svg={
+                  <svg
+                    id="Layer_1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlnsXlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 0 30 30"
+                    enableBackground="new 0 0 32 32"
+                    xmlSpace="preserve"
+                    width={30}
+                    height={30}
+                  >
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={1.875}
+                      strokeMiterlimit={10}
+                      d="M24.094 10.219C22.406 6.938 18.938 4.688 15 4.688c-4.406 0 -8.063 2.719 -9.563 6.563"
+                    />
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={1.875}
+                      strokeMiterlimit={10}
+                      d="M5.813 19.688c1.688 3.281 5.156 5.625 9.188 5.625 4.406 0 8.063 -2.719 9.563 -6.563"
+                    />
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={1.875}
+                      strokeMiterlimit={10}
+                      points="26,5 26,11 20,11 "
+                      d="M24.375 4.688L24.375 10.313L18.75 10.313"
+                    />
+                    <path
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={1.875}
+                      strokeMiterlimit={10}
+                      points="6,27 6,21 12,21 "
+                      d="M5.625 25.313L5.625 19.688L11.25 19.688"
+                    />
+                  </svg>
+                }
               />
             </>
           )}
@@ -500,6 +530,9 @@ const AdminCategoriesPage = ({
   const [productsPageNumber, setProductsPageNumber] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
   const [isFirstRender, setIsFirstRender] = useState(true);
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -545,45 +578,65 @@ const AdminCategoriesPage = ({
     }, 1000);
   };
 
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    router.refresh();
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 500);
+  };
+
   const deleteTheCategory = async (categoryId) => {
     Swal.fire({
-      title: 'Are you sure?',
+      title: "Are you sure?",
       text: "You won't be able to revert this!",
-      icon: 'warning',
+      icon: "warning",
       iconColor: "#4bc0d9",
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
-      customClass: "staticBgColor fontColorGray"      
-    }).then(async(result) => {
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      customClass: "staticBgColor fontColorGray",
+    }).then(async (result) => {
       if (result.isConfirmed) {
         try {
           await deleteCategory(categoryId);
-          
+
           Swal.fire({
-            icon: 'success',
-            title: 'Deleted!',
-            text: 'Your file has been deleted.',
+            icon: "success",
+            title: "Deleted!",
+            text: "Your file has been deleted.",
             customClass: "staticBgColor fontColorGray",
             iconColor: "#4bc0d9",
-            confirmButtonColor: '#4bc0d9',
-          })
+            confirmButtonColor: "#4bc0d9",
+          });
           router.refresh();
         } catch (error) {
           Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-            footer: '<p>Please try again</p>'
-          })
+            icon: "error",
+            title: "Oops...",
+            text: "Something went wrong!",
+            footer: "<p>Please try again</p>",
+          });
         }
       }
-    })
-  }
+    });
+  };
 
   return (
     <div className="h-screen bgColor fontColor p-4 gap-6 flex flex-col overflow-y-scroll overflow-x-hidden pb-14 ">
+      <button
+        onClick={handleRefresh}
+        className=" hover:bg-white hover:text-black border-white border-2 duration-75 text-white font-bold py-2 px-4 rounded max-h-12 self-center"
+        disabled={isRefreshing} // Disable the button when refreshing
+        title={isRefreshing ? "Refreshing..." : "Refresh"}
+      >
+        {isRefreshing ? (
+          <SVGLoading className="w-6 h-6 inline " />
+        ) : (
+          <SVGRefresh title="Refresh" className="w-6 h-6 inline" />
+        )}
+      </button>
       <div className=" flex gap-4 flex-col ">
         {categoriesData.map((category) => (
           <CategoryCard

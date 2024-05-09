@@ -5,7 +5,13 @@ import SearchBar from "./SearchBar";
 import { deleteManyOrders, deleteOrder, getAdminOrders } from "@/lib";
 import { useIsVisible } from "./UseVisible";
 import { useRouter } from "next/navigation";
-import { FilterSelect, SVGTrash, ScrollButton } from ".";
+import {
+  FilterSelect,
+  SVGLoading,
+  SVGRefresh,
+  SVGTrash,
+  ScrollButton,
+} from ".";
 import Swal from "sweetalert2";
 import AdminEachOrderState from "./AdminEachOrderState";
 
@@ -26,7 +32,9 @@ const AdminOrders = ({ orders, hasNextPage, searchText, filteredState }) => {
 
   const [selected, setSelected] = useState([]);
   const [isSelectAll, setIsSelectAll] = useState(false);
-  // const[isSelectAllInputState, setIsSelectAllInputState] = useState(false);
+
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   const [isAllCancelledOrdersSelected, setIsAllCancelledOrdersSelected] =
     useState(false);
   const [isAllOrderedOrdersSelected, setIsAllOrderedOrdersSelected] =
@@ -125,7 +133,8 @@ const AdminOrders = ({ orders, hasNextPage, searchText, filteredState }) => {
       setIsSelectedState: setIsAllDeletedOrdersSelected,
     };
 
-  const handleNavigation = (state) => { //TODO: Make the search system for orders better (by price, prodicts, email, ...)
+  const handleNavigation = (state) => {
+    //TODO: Make the search system for orders better (by price, prodicts, email, ...)
     const currentParams = new URLSearchParams(window.location.search);
     if (state === "All") currentParams.delete("filteredState");
     else currentParams.set("filteredState", state);
@@ -140,6 +149,14 @@ const AdminOrders = ({ orders, hasNextPage, searchText, filteredState }) => {
   useEffect(() => {
     handleNavigation(selectedState);
   }, [selectedState]);
+
+  const handleRefresh = async () => {
+    setIsRefreshing(true);
+    router.refresh();
+    setTimeout(() => {
+      setIsRefreshing(false);
+    }, 500);
+  };
 
   const handleDeleteOrder = async (id) => {
     Swal.fire({
@@ -179,11 +196,14 @@ const AdminOrders = ({ orders, hasNextPage, searchText, filteredState }) => {
   };
 
   const handleDeleteManyOrders = async () => {
-    if(selected.length === 0) return;
+    if (selected.length === 0) return;
 
-    const availableIds = ordersState.map(order => order.node.id);
-    const selectedIds = selected.filter(id => availableIds.includes(id));
-    if(selectedIds.length === 0) {setSelected([]); return}
+    const availableIds = ordersState.map((order) => order.node.id);
+    const selectedIds = selected.filter((id) => availableIds.includes(id));
+    if (selectedIds.length === 0) {
+      setSelected([]);
+      return;
+    }
 
     Swal.fire({
       title: "Are you sure?",
@@ -208,7 +228,7 @@ const AdminOrders = ({ orders, hasNextPage, searchText, filteredState }) => {
             confirmButtonColor: "#4bc0d9",
           });
 
-          setSelected([])
+          setSelected([]);
           router.refresh();
         } catch (error) {
           Swal.fire({
@@ -267,35 +287,37 @@ const AdminOrders = ({ orders, hasNextPage, searchText, filteredState }) => {
 
   return (
     <div className="flex flex-col items-center justify-between p-4 pb-20 h-screen w-screen bgColor overflow-y-scroll overflow-x-hidden fontColor ">
-      <div ref={topRef} className="mb-4 fontColor ">
+      <div ref={topRef} className="mb-4 fontColor w-full max-w-[350px]">
         <SearchBar resetSearchText={resetSearchText} />
-        <div className="flex justify-between max-[280px]:flex-col">
+        <div className="flex justify-between max-[340px]:flex-col">
           <FilterSelect
             options={allState.map((item) => ({ name: item }))}
             searchedSelection={filteredState}
             filterBy="State"
             setResetSearchText={setResetSearchText}
           />
-
+          <button
+            onClick={handleRefresh}
+            className=" hover:bg-white hover:text-black border-white border-2 duration-75 text-white font-bold py-2 px-4 rounded max-h-12 self-center"
+            disabled={isRefreshing} // Disable the button when refreshing
+            title={isRefreshing ? "Refreshing..." : "Refresh"}
+          >
+            {isRefreshing ? (
+              <SVGLoading className="w-6 h-6 inline " />
+            ) : (
+              <SVGRefresh title="Refresh" className="w-6 h-6 inline" />
+            )}
+          </button>
           <label
             className={`relative cursor-pointer ${
               isSelectAll
                 ? "border-[#4bc0d9]"
                 : "border-gray-300 hover:border-[#4bc0d9]"
-            }  transition duration-300 p-1 pb-0 text-xl font-semibold opBorderColor flex min-[280px]:flex-col h-full justify-between items-center min-[280px]:gap-4 `}
+            }  transition duration-300 p-1 pb-0 text-xl font-semibold opBorderColor flex min-[340px]:flex-col h-full justify-between items-center min-[280px]:gap-4 `}
             htmlFor="selectAll Orders"
           >
             Select All
             <div className="flex justify-around w-full items-center">
-              {selected.length > 0 ? (
-                <button className=" border-b-2" onClick={handleDeleteManyOrders}>
-                  <SVGTrash title="Delete Selected Orders" />
-                </button>
-              ) : (
-                <button disabled={true} className="text-white/50 border-b-2">
-                  <SVGTrash title="Delete Selected Orders" />
-                </button>
-              )}
               <input
                 className="w-5 h-5"
                 type="checkbox"
@@ -303,12 +325,24 @@ const AdminOrders = ({ orders, hasNextPage, searchText, filteredState }) => {
                 name="selectAll Orders"
                 onChange={selectAll}
                 checked={isSelectAll}
-              />
+                />
+                {selected.length > 0 ? (
+                  <button
+                    className=" border-b-2"
+                    onClick={handleDeleteManyOrders}
+                  >
+                    <SVGTrash title="Delete Selected Orders" />
+                  </button>
+                ) : (
+                  <button disabled={true} className="text-white/50 border-b-2">
+                    <SVGTrash title="Delete Selected Orders" />
+                  </button>
+                )}
             </div>
           </label>
         </div>
       </div>
-    
+
       {array.map((item, index) => (
         <AdminEachOrderState
           key={`AdminEachOrderState: ${index}`}
