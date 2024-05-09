@@ -249,7 +249,7 @@ const ProfilePage = ({ user, orders }) => {
                 value={updatedUserDetails.birthDate}
                 onChange={handleInputChange}
                 className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-[#4bc0d9]"
-                min={new Date().toISOString().split("T")[0]}
+                max={new Date().toISOString().split("T")[0]}
               />
             </div>
           </div>
