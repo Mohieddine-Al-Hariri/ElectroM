@@ -462,7 +462,7 @@ const ItemsDetailsPage = ({ product, user }) => {
         </div>
         {/* Similars from same Category */}
         {product.categories[0]?.products?.length > 0 && (
-          <h2 className="pl-4 ">Other Related Products</h2>
+          <h2 className="ml-4 w-full border-b-2 mb-2 borderColor">Other Related Products  </h2>
         )}
         <div className="w-full overflow-x-auto h-fit px-2 pb-2">
           {product.categories[0]?.products?.length > 0 && (
