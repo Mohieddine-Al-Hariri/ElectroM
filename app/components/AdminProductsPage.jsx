@@ -325,7 +325,7 @@ const AdminProductsPage = ({
               />
               <button
                 onClick={handleRefresh}
-                className=" hover:bg-white hover:text-black border-white border-2 duration-200 transition-colors text-white font-bold py-2 px-4 rounded"
+                className=" refreshButton border-2 duration-200 transition-colors font-bold py-2 px-4 rounded"
                 disabled={isRefreshing} // Disable the button when refreshing
                 title={isRefreshing ? "Refreshing..." : "Refresh"}
               >
@@ -354,7 +354,7 @@ const AdminProductsPage = ({
                     onChange={selectAll}
                     checked={isSelectAll}
                   />
-                  {isDeleting ? (
+                  {isDeleting ? ( //TODO: FIX Color for lightMode
                     <SVGLoading className="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-[#4bc0d9]" />
                   ) : selectedProducts.length > 0 ? (
                     <button
@@ -366,7 +366,7 @@ const AdminProductsPage = ({
                   ) : (
                     <button
                       disabled={true}
-                      className="text-white/50 border-b-2"
+                      className="dark:text-white/50 text-black/50 border-b-2"
                     >
                       <SVGTrash title="Select a product or more to delete" />
                     </button>

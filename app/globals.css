@@ -525,7 +525,21 @@ button {
   @apply flex justify-center items-center;
 }
 
+/* Refresh Button */
+.refreshButton {
+  @apply bgColor fontColor;
+}
+.refreshButton:hover {
+  @apply opBgColor opTxtColor opBorderColor;
+}
 
+/* Delete Button */
+.deleteButton {
+  @apply bgColor fontColor;
+}
+.deleteButton:hover {
+  @apply opBgColor opTxtColor opBorderColor;
+}
 
 /* Define the initial state for the button */
 .scrollButton {

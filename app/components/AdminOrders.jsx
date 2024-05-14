@@ -298,7 +298,7 @@ const AdminOrders = ({ orders, hasNextPage, searchText, filteredState }) => {
           />
           <button
             onClick={handleRefresh}
-            className=" hover:bg-white hover:text-black border-white border-2 duration-200 transition-colors text-white font-bold py-2 px-4 rounded max-h-12 self-center"
+            className=" refreshButton border-2 duration-200 transition-colors refreshButton font-bold py-2 px-4 rounded max-h-12 self-center"
             disabled={isRefreshing} // Disable the button when refreshing
             title={isRefreshing ? "Refreshing..." : "Refresh"}
           >
@@ -334,7 +334,7 @@ const AdminOrders = ({ orders, hasNextPage, searchText, filteredState }) => {
                     <SVGTrash title="Delete Selected Orders" />
                   </button>
                 ) : (
-                  <button disabled={true} className="text-white/50 border-b-2">
+                  <button disabled={true} className="dark:text-white/50 text-black/50 border-b-2">
                     <SVGTrash title="Delete Selected Orders" />
                   </button>
                 )}

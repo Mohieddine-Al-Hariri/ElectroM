@@ -106,6 +106,7 @@ export async function POST(req) {
       variants: variantInput,
       urls: imgUrls,
     });
+
     
     return new Response(JSON.stringify(createdProduct.createProduct));
   } catch (error) {

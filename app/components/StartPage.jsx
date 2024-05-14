@@ -11,7 +11,13 @@ import {
   publishManyItemsAddedToCart,
 } from "@/lib";
 import { useRouter } from "next/navigation";
-import { FilterSelect, NoResultsFound, ProductCard, ScrollButton } from ".";
+import {
+  FilterSelect,
+  NoResultsFound,
+  ProductCard,
+  SVGLoading,
+  ScrollButton,
+} from ".";
 import { Fade } from "react-awesome-reveal";
 
 export const LoadingCard = () => {
@@ -257,8 +263,8 @@ const StartPage = ({
         <SearchBar searched={searchText} />
       </div>
 
-      <div className=" text-neutral-700 fontColorGray text-xl font-bold leading-normal ml-5">
-        Items
+      <div className=" text-neutral-700 fontColorGray text-xl font-bold leading-normal ml-5 gap-2 flex ">
+        <span>Items</span>
       </div>
       <div className="w-full h-full flex items-start justify-around lg:justify-between flex-wrap gap-1 p-4 relative ">
         <Fade

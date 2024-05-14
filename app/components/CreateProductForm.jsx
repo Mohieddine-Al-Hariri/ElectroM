@@ -489,10 +489,10 @@ const CreateProductForm = ({ categoriesData, isDarkMode, collectionsData }) => {
       ...form,
       imgUrls,
       slug,
-      price,
+      price: parseFloat(price),
       variants: selectedPills,
       isOnSale,
-      previousPrice: isOnSale ? prevPrice : 0,
+      previousPrice: isOnSale ? parseFloat(prevPrice) : 0,
       tags: tagList,
     });
 

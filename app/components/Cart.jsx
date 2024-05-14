@@ -284,7 +284,7 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
 
               <button
                 onClick={handleRefresh}
-                className=" hover:bg-white hover:text-black border-white border-2 duration-200 transition-colors text-white font-bold py-[6px] px-3 rounded"
+                className="refreshButton border-2 duration-200 transition-colors font-bold py-[6px] px-3 rounded"
                 disabled={isRefreshing} // Disable the button when refreshing
                 title={isRefreshing ? "Refreshing..." : "Refresh"}
               >
