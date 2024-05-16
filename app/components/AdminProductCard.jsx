@@ -194,8 +194,8 @@ const AdminProductCard = ({
   else if (productState === "Out_of_Stock") stateTxtClr = "text-yellow-500";
 
   return (
-    <div className="flex relative w-full lg:w-1/3 grow justify-between items-center rounded-md shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] productCardBg fontColor p-2 ">
-      <div className="absolute right-2 top-2 flex gap-2 justify-center items-center ">
+    <div className="flex max-[400px]:flex-col relative w-full lg:w-1/4 md:w-1/3 pt-10 max-[400px]:gap-2 grow justify-between items-center rounded-md shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] productCardBg fontColor p-2 ">
+      <div className="absolute right-2 top-1 flex gap-2 justify-center items-center ">
         <button
           className="p-1  rounded-full hover:bg-[#4bc0d9] hover:text-white"
           onClick={() => router.push(`Products/updateProduct/${product.id}`)}
@@ -215,11 +215,11 @@ const AdminProductCard = ({
         <SVGComponent className="absolute -rotate-[90deg] -top-[6px] -left-[6px] z-10" />
       )}
       <Image
-        className="rounded-t-md"
+        className="rounded-t-md w-[200px]"
         src={product.imageUrls[0]?.url}
         alt={product.name}
-        width={102}
-        height={109.03}
+        width={200}
+        height={200}
       />
       <div className="w-full flex-col text-center fontColor ">
         <div className=" fontColorGray text-sm font-bold ">
@@ -281,7 +281,7 @@ const AdminProductCard = ({
         )}
         <div className="px-2 ">
           <button
-            className="rounded-lg bg-[#4bc0d9] hover:bg-[#3ca8d0] py-1 text-white w-full "
+            className="rounded-lg bg-[#4bc0d9] hover:bg-[#3ca8d0] py-1 max-[400px]:py-2 text-white w-full "
             onClick={() => router.push(`/itemsDetails/${product.id}`)}
           >
             Details

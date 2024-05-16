@@ -375,7 +375,7 @@ const AdminProductsPage = ({
               </div>
             </div>
           </div>
-          <div className="flex lg:flex-wrap max-lg:flex-col gap-2 bgColor ">
+          <div className="flex md:flex-wrap max-md:flex-col gap-2 bgColor ">
             {productsState.map(({ node }, index) => (
               <AdminProductCard
                 key={`${node.id}-${index}`}
