@@ -6,6 +6,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
 /*=============== VARIABLES CSS ===============*/
+@layer base {
+  /* TODO: CONTINUE */
+  :root { 
+    --primaryColor:#4bc0d9;
+  }
+}
+
 :root {
   /*========== Colors ==========*/
   /*Color mode HSL(hue, saturation, lightness)*/
@@ -70,6 +77,8 @@ body {
   --opBorderColor: black;
   --productCardBg: rgb(230, 230, 230);
   --whatsappTxt: #25D366;
+  --mainColor:#4bc0d9;
+  /* --secondaryColor:#4bc0d9; */
   /* --scrollbar-track-bg: linear-gradient(to top, #c6c4c6, #d8d8d8, #ececec);*/
   --scrollbar-track-bg: white;
   --scrollbar-thumb-color: #888;
