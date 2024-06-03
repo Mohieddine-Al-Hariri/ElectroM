@@ -201,7 +201,7 @@ const CreateCollectionForm = ({ products, getOtherProducts, productsPageNumber, 
                 className={`${
                   !hasPreviousPage
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    : isFetching ? "bg-gray-300 text-gray-500 cursor-waiting" : "bg-[#4bc0d9] hover:bg-[#3ca8d0]"
+                    : isFetching ? "bg-gray-300 text-gray-500 cursor-waiting" : "bg-primaryColor hover:bg-secondaryColor"
                 } text-white font-bold py-2 px-4 rounded-full focus:outline-none`}
               >
                 &lt;
@@ -213,7 +213,7 @@ const CreateCollectionForm = ({ products, getOtherProducts, productsPageNumber, 
                 className={`${
                   !hasNextPage
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    : isFetching ? "bg-gray-300 text-gray-500 cursor-waiting" : "bg-[#4bc0d9] hover:bg-[#3ca8d0]"
+                    : isFetching ? "bg-gray-300 text-gray-500 cursor-waiting" : "bg-primaryColor hover:bg-secondaryColor"
                 } text-white font-bold py-2 px-4 rounded-full focus:outline-none`}
               >
                 &gt;
@@ -255,7 +255,7 @@ const CreateCollectionForm = ({ products, getOtherProducts, productsPageNumber, 
         <button
           disabled={isSaving}
           onClick={handleSubmit}
-          className="bg-[#4bc0d9] hover:bg-[#3ca8d0] text-white font-semibold py-2 max-sm:mb-6 rounded-lg transition-colors duration-300"
+          className="bg-primaryColor hover:bg-secondaryColor text-white font-semibold py-2 max-sm:mb-6 rounded-lg transition-colors duration-300"
         >
           {isSaving ? "Saving..." : "Submit"}
         </button>

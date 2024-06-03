@@ -29,8 +29,8 @@ const AdminEachOrderState = ({
       <label
         className={`relative cursor-pointer ${
           isSelected
-            ? "border-[#4bc0d9]"
-            : "border-gray-300 hover:border-[#4bc0d9]"
+            ? "border-primaryColor"
+            : "border-gray-300 hover:border-primaryColor"
         }  transition duration-300 p-2 pb-0 text-xl font-semibold w-full flex justify-between border-b-2 opBorderColor`}
         htmlFor={`select All Order State ${index}`}
       >

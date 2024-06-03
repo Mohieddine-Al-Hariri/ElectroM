@@ -58,7 +58,7 @@ export const CollectionStateMenu = ({
       <div>
         <div className="w-full flex justify-end">
           <button
-            className="p-1 fontColorGray hover:text-gray-100 hover:bg-[#4bc0d9] rounded-full focus:outline-none"
+            className="p-1 fontColorGray hover:text-gray-100 hover:bg-primaryColor rounded-full focus:outline-none"
             onClick={() => setIsOpen(!isOpen)} title="Close" 
           >
             <SVGX />
@@ -73,7 +73,7 @@ export const CollectionStateMenu = ({
                   key={state}
                   disabled={state === collectionState}
                   onClick={() => updateCollectionShowState(state)}
-                  className={`px-4 py-2 rounded-md hover:bg-[#4bc0d9] ${state === collectionState ? "text-whiter" : " fontColor "} hover:text-white flex w-full justify-between `}
+                  className={`px-4 py-2 rounded-md hover:bg-primaryColor ${state === collectionState ? "text-whiter" : " fontColor "} hover:text-white flex w-full justify-between `}
                 >
                   {state}
                   {/* {svg} */}
@@ -477,14 +477,14 @@ const CollectionCard = ({
         >
           {updatingCollectionName ? (
             <button
-              className="flex w-full justify-center sm:justify-between hover:text-[#4bc0d9] max-sm:flex-col items-center sm:gap-2"
+              className="flex w-full justify-center sm:justify-between hover:text-primaryColor max-sm:flex-col items-center sm:gap-2"
               onClick={updateCollectionDetails}
             >
               <span className="text-md">{isUpdating ? "Submitting..." : "Submit"}</span>
               {isUpdating ? <SVGLoading/> : <SVGCheck/>}
             </button>
           ) : (
-            <button className="hover:text-[#4bc0d9]" onClick={() => setUpdatingCollectionName(true)}>
+            <button className="hover:text-primaryColor" onClick={() => setUpdatingCollectionName(true)}>
               <SVGPencil/>
             </button>
           )}
@@ -511,7 +511,7 @@ const CollectionCard = ({
               {updatingCollectionName && <h2 className="text-center">State</h2>}
               <button
                 onClick={() => setOpenMenu(true)}
-                className="border-2 border-gray-500 hover:border-[#4bc0d9] rounded-full px-3 py-1 "
+                className="border-2 border-gray-500 hover:border-primaryColor rounded-full px-3 py-1 "
               >
                 <h1 className={`${stateTxtClr} font-bold`}>
                   {collectionState}
@@ -538,7 +538,7 @@ const CollectionCard = ({
                 <SVGCancel width="30px" height="30px" />
               </button>
               <button
-                className="flex w-full max-sm:flex-col items-center justify-center sm:justify-between sm:gap-2 hover:text-[#4bc0d9]"
+                className="flex w-full max-sm:flex-col items-center justify-center sm:justify-between sm:gap-2 hover:text-primaryColor"
                 onClick={resetCollectionDetailsFunc}
               >
                 Default
@@ -606,7 +606,7 @@ const CollectionCard = ({
               className={`${
                 !hasPreviousPage
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : isFetching ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-[#4bc0d9] hover:bg-[#3ca8d0]"
+                  : isFetching ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-primaryColor hover:bg-secondaryColor"
               } text-white font-bold py-2 px-4 rounded-full focus:outline-none`}
             >
               &lt;
@@ -618,7 +618,7 @@ const CollectionCard = ({
               className={`${
                 !hasNextPage
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : isFetching ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-[#4bc0d9] hover:bg-[#3ca8d0]"
+                  : isFetching ? "bg-gray-300 text-gray-500 cursor-not-allowed" : "bg-primaryColor hover:bg-secondaryColor"
               } text-white font-bold py-2 px-4 rounded-full focus:outline-none`}
             >
               &gt;

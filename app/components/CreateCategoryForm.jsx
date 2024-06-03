@@ -158,7 +158,7 @@ const CreateCategoryForm = ({
               id="show"
               checked={show}
               onChange={handleShowChange}
-              className="h-4 w-4 text-[#4bc0d9] colorScheme"
+              className="h-4 w-4 text-primaryColor colorScheme"
             />
             <span className="text-sm font-medium fontColorGray">Show</span>
           </label>
@@ -234,7 +234,7 @@ const CreateCategoryForm = ({
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                     : isFetching
                     ? "bg-gray-300 text-gray-500 cursor-waiting"
-                    : "bg-[#4bc0d9] hover:bg-[#3ca8d0]"
+                    : "bg-primaryColor hover:bg-secondaryColor"
                 } text-white font-bold py-2 px-4 rounded-full focus:outline-none`}
               >
                 &lt;
@@ -250,7 +250,7 @@ const CreateCategoryForm = ({
                     ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                     : isFetching
                     ? "bg-gray-300 text-gray-500 cursor-waiting"
-                    : "bg-[#4bc0d9] hover:bg-[#3ca8d0]"
+                    : "bg-primaryColor hover:bg-secondaryColor"
                 } text-white font-bold py-2 px-4 rounded-full focus:outline-none`}
               >
                 &gt;
@@ -261,7 +261,7 @@ const CreateCategoryForm = ({
         <button
           disabled={creatingCategory}
           type="submit"
-          className="max-sm:mb-6 bg-[#4bc0d9] hover:bg-[#3ca8d0] text-white px-4 py-2 rounded w-full"
+          className="max-sm:mb-6 bg-primaryColor hover:bg-secondaryColor text-white px-4 py-2 rounded w-full"
         >
           {creatingCategory ? (
             <div className="flex gap-4 justify-center items-center ">

@@ -7,7 +7,7 @@ const SVGCheck = (props) => (
     viewBox="0 0 0.9 0.9"
     id="check"
     xmlns="http://www.w3.org/2000/svg"
-    className="hover:fill-[#4bc0d9]"
+    className="hover:fill-primaryColor"
     {...props}
   >
     <title>Sumbit</title>

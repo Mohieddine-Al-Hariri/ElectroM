@@ -23,7 +23,7 @@ import Swal from "sweetalert2";
 export const ButtonSVG = ({ func, text, svg, hoverColor }) => (
   <button
     className={`flex justify-between items-center max-sm:w-fit max-sm:flex-col w-full ${
-      hoverColor ? `hover:${hoverColor}` : "hover:text-[#4bc0d9]"
+      hoverColor ? `hover:${hoverColor}` : "hover:text-primaryColor"
     }`}
     onClick={func}
   >
@@ -308,7 +308,7 @@ const CategoryCard = ({
             )
           ) : (
             <button onClick={() => setUpdatingCategoryName(true)}>
-              <SVGPencil className="hover:text-[#4bc0d9]" />
+              <SVGPencil className="hover:text-primaryColor" />
             </button>
           )}
           {isUpdatingShow ? (
@@ -493,7 +493,7 @@ const CategoryCard = ({
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                   : isFetching
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : "bg-[#4bc0d9] hover:bg-[#3ca8d0]"
+                  : "bg-primaryColor hover:bg-secondaryColor"
               } text-white font-bold py-2 px-4 rounded-full focus:outline-none`}
             >
               &lt;
@@ -509,7 +509,7 @@ const CategoryCard = ({
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
                   : isFetching
                   ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : "bg-[#4bc0d9] hover:bg-[#3ca8d0]"
+                  : "bg-primaryColor hover:bg-secondaryColor"
               } text-white font-bold py-2 px-4 rounded-full focus:outline-none`}
             >
               &gt;

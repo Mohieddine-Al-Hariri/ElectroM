@@ -5,8 +5,8 @@ const SelectionProductCard = ({ product, included, include, inputId }) => (
     <label
       className={`relative cursor-pointer ${
         included
-          ? "border-[#4bc0d9]"
-          : "border-gray-300 group-hover:border-[#3ca8d0]"
+          ? "border-primaryColor"
+          : "border-gray-300 group-hover:border-secondaryColor"
       } border-2 rounded-[10px] transition duration-300`}
       htmlFor={inputId}
     >
@@ -34,7 +34,7 @@ const SelectionProductCard = ({ product, included, include, inputId }) => (
       <div
         className={`absolute -top-4 left-4 ${
           included
-            ? "bg-[#4bc0d9] group-hover:bg-[#3ca8d0] text-gray-100 "
+            ? "bg-primaryColor group-hover:bg-secondaryColor text-gray-100 "
             : "bg-white text-gray-600 "
         }  p-1 rounded-full shadow`}
       >

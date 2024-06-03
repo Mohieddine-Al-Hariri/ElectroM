@@ -47,7 +47,7 @@ export default async function Home({ searchParams: { searchText, category } }) {
           
           <div className="relative max-w-7xl mx-auto ">
             <div className="animate-pulse duration-200 ">
-              <div className="absolute -inset-1 bg-gradient-to-r from-[#308ec7] to-[#3ca8d0] rounded-lg blur  opacity-50"></div>
+              <div className="absolute -inset-1 bg-gradient-to-r from-[#308ec7] to-secondaryColor rounded-lg blur  opacity-50"></div>
             </div>
             <div className="relative rounded-[20px] bg-white ring-1 ring-gray-900/5 leading-none flex items-center justify-center ">
               <Image width={300} height={334} className="w-[333px] h-[250px] rounded-[20px] object-cover " src="/ElecrtoMLogo.png" alt="gear up"/>

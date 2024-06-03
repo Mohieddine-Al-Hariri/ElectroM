@@ -36,7 +36,7 @@ const OrderCard = ({
   let stateColor = "text-green-500";
   if (order.state === "Cancelled" || order.state === "Deleted")
     stateColor = "text-red-500";
-  else if (order.state === "Delivering") stateColor = "text-[#4bc0d9]";
+  else if (order.state === "Delivering") stateColor = "text-primaryColor";
   else if (order.state === "Ordered") stateColor = "text-yellow-500";
   const item = order.orderItems[0];
 
@@ -146,7 +146,7 @@ const OrderCard = ({
             ) : (
               <button
                 onClick={() => setOpenMenu(true)}
-                className="hover:border-[#4bc0d9] border-2 border-gray-500 rounded-full px-3 py-1 "
+                className="hover:border-primaryColor border-2 border-gray-500 rounded-full px-3 py-1 "
               >
                 <h1 className={`${stateColor} font-bold`}>{orderState}</h1>
               </button>

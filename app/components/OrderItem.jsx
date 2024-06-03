@@ -9,7 +9,7 @@ const OrderItem = ({ item }) => {
         <Image
           width={86}
           height={108}
-          className="w-[86px] h-[108px] rounded-[20px] border-2 border-gray-300 hover:border-[#4bc0d9] transition duration-300"
+          className="w-[86px] h-[108px] rounded-[20px] border-2 border-gray-300 hover:border-primaryColor transition duration-300"
           src={product.imageUrls[0].url}
           alt={product.name}
         /> :
@@ -17,7 +17,7 @@ const OrderItem = ({ item }) => {
           <Image
             width={86}
             height={108}
-            className="w-[86px] h-[108px] rounded-[20px] border-2 border-gray-300 hover:border-[#4bc0d9] transition duration-300"
+            className="w-[86px] h-[108px] rounded-[20px] border-2 border-gray-300 hover:border-primaryColor transition duration-300"
             src={collection.imageUrl}
             alt={collection.name}
           />
@@ -28,7 +28,7 @@ const OrderItem = ({ item }) => {
                 <Image
                   width={86}
                   height={108}
-                  className="w-[86px] h-[108px] rounded-[20px] border-2 border-gray-300 hover:border-[#4bc0d9] transition duration-300"
+                  className="w-[86px] h-[108px] rounded-[20px] border-2 border-gray-300 hover:border-primaryColor transition duration-300"
                   src={product.imageUrls[0].url}
                   alt={product.name}
                   key={`collection.product Image ${index}`}

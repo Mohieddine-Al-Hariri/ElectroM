@@ -227,7 +227,7 @@ const ProfilePage = ({ user, orders }) => {
                   name="firstName"
                   value={updatedUserDetails.firstName}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-[#4bc0d9]"
+                  className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-primaryColor"
                 />
               </div>
               <div>
@@ -237,7 +237,7 @@ const ProfilePage = ({ user, orders }) => {
                   name="lastName"
                   value={updatedUserDetails.lastName}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-[#4bc0d9]"
+                  className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-primaryColor"
                 />
               </div>
             </div>
@@ -248,7 +248,7 @@ const ProfilePage = ({ user, orders }) => {
                 name="birthDate"
                 value={updatedUserDetails.birthDate}
                 onChange={handleInputChange}
-                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-[#4bc0d9]"
+                className="w-full px-3 py-2 border rounded focus:outline-none focus:ring focus:border-primaryColor"
                 max={new Date().toISOString().split("T")[0]}
                 min={(new Date(new Date().getFullYear() - 200, new Date().getMonth(), new Date().getDate())).toISOString().split("T")[0]}
               />

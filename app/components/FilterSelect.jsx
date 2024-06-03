@@ -25,7 +25,7 @@ const FilterSelect = ({ options, extraOptions, refe, setResetSearchText, filterB
     setResetSearchText(prev => !prev);
     router.push(newPathname);
   };
-
+  
   useEffect(() => {
     handleNavigation();
   },[selected]);

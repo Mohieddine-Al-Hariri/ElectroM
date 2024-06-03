@@ -13,7 +13,7 @@ const Order = ({ order }) => {
 
   let stateColor = "text-green-500";
   if (order.state === "Cancelled" || order.state === "Deleted") stateColor = "text-red-500";
-  else if(order.state === "Delivering") stateColor = "text-[#4bc0d9]";
+  else if(order.state === "Delivering") stateColor = "text-primaryColor";
   else if(order.state === "Ordered") stateColor = "text-yellow-500";
   
   const cancelOrder = async () => { 
@@ -77,7 +77,7 @@ const Order = ({ order }) => {
           }
         </div>
       </div>
-      {order.state === "Recieved" && <Link href={`/ReviewProducts/${order.id}`} className="border-2 border-gray-500 text-[#4bc0d9] text-center text-lg rounded-full px-3 py-1">Review Products</Link>}
+      {order.state === "Recieved" && <Link href={`/ReviewProducts/${order.id}`} className="border-2 border-gray-500 text-primaryColor text-center text-lg rounded-full px-3 py-1">Review Products</Link>}
     </div>
   )
 }

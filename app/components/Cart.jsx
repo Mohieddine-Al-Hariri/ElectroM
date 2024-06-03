@@ -7,6 +7,7 @@ import {
   publishOrder,
   removeItemfromCart,
   submitOrder,
+  updateOrderItem,
 } from "@/lib";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -25,6 +26,7 @@ export const OrderButton = ({
   setSelectedItemsIds,
   itemsNames,
   setError,
+  isDisabled
 }) => {
   const router = useRouter();
 
@@ -54,14 +56,15 @@ export const OrderButton = ({
     }
   };
 
+  const isButtonDisabled = (isSubmitting || !itemsIds.length || isDisabled) ? false : true;
   return (
     <div className="pb-20 ">
       <button
-        disabled={!itemsIds.length || isSubmitting}
+        disabled={!itemsIds.length || isSubmitting || isDisabled}
         onClick={orderItems}
         className={`w-[343px] h-[50px] px-4 py-2  ${
-          itemsIds.length
-            ? "bg-[#4bc0d9] text-white hover:bg-[#3ca8d0]"
+          isButtonDisabled
+            ? "bg-primaryColor text-white hover:bg-secondaryColor"
             : "bg-gray-300"
         }  rounded-lg border-black justify-around items-center gap-[3px] flex`}
       >
@@ -99,7 +102,7 @@ export const GoShopping = () => {
     <div className="pb-20">
       <Link
         href="/"
-        className="w-[343px] h-[50px] px-4 py-2 bg-[#4bc0d9] text-white hover:bg-[#3ca8d0] rounded-lg justify-around items-center gap-[3px] flex"
+        className="w-[343px] h-[50px] px-4 py-2 bg-primaryColor text-white hover:bg-secondaryColor rounded-lg justify-around items-center gap-[3px] flex"
       >
         <div className=" text-center text-[23px] font-semibold flex items-center gap-4">
           <h2>Go Shopping</h2>
@@ -129,6 +132,10 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
   const [selectAll, setSelectAll] = useState(false);
   const [error, setError] = useState(false);
   const [items, setItems] = useState([]);
+
+  const [isEditting, setIsEditting] = useState("");
+  const [isUpdatingItem, setIsUpdatingItem] = useState(false);
+
 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -177,6 +184,18 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
       setError(true);
     }
   };
+
+  const handleUpdateItem = async (id, variantName, quantity, price, variantId) => {
+    if(!user) return
+    if(!id || !variantName || !quantity || !price || !variantId) return //TODO: handle error
+    console.log(id, variantName, quantity, price, variantId)
+    setIsUpdatingItem(true);
+    await updateOrderItem({id, variantName, quantity, price, variantId});
+    
+    setIsEditting("");
+    setIsUpdatingItem(false);
+    router.refresh();
+  }
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
@@ -230,7 +249,7 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
             } deleted succefully. \nIf you can still see them, try refreshing the page.`,
             {
               duration: 5000,
-              icon: <SVGTrash className="text-[#4bc0d9]  w-[32px]" />,
+              icon: <SVGTrash className="text-primaryColor  w-[32px]" />,
               //TODO: Learn how to use animation.json + implement it
             }
           );
@@ -266,7 +285,7 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
           <h1
             className={`text-3xl w-full h-[200px] transition duration-200 ${
               submitting ? "scale-100" : "scale-0"
-            } flex flex-col justify-center items-center text-[#4bc0d9]`}
+            } flex flex-col justify-center items-center text-primaryColor`}
           >
             Submitting...
             <SVGLoading />
@@ -298,7 +317,7 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
             {items?.length > 0 && (
               <div
                 className={`flex items-center gap-4 pl-4 py-2 ${
-                  selectedItemsIds.length > 0 ? "bg-[#4bc0d9]" : "bg-gray-100"
+                  selectedItemsIds.length > 0 ? "bg-primaryColor" : "bg-gray-100"
                 } rounded-md shadow-md mt-4 mb-2`}
               >
                 <label
@@ -311,7 +330,7 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
                     name="selectAll"
                     onChange={selectAllItems}
                     checked={selectAll}
-                    className="text-[#4bc0d9] rounded cursor-pointer"
+                    className="text-primaryColor rounded cursor-pointer"
                   />
                   <span className="text-lg font-semibold">
                     {selectedItemsIds.length} Items Selected
@@ -344,6 +363,11 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
                   selectedItemsIds={selectedItemsIds}
                   setSelectedItemsIds={setSelectedItemsIds}
                   selectAll={selectAll}
+                  handleUpdateItem={handleUpdateItem}
+                  isEditting={isEditting.length > 0? true : false}
+                  isEdittingThisItem={isEditting.length > 0 && isEditting === item.id}
+                  setIsEditting={setIsEditting}
+                  isUpdatingItem={isUpdatingItem}
                 />
               );
             })}
@@ -367,6 +391,7 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
       )}
       {cartItems?.length > 0 ? (
         <OrderButton
+          isDisabled={isEditting.length > 0} // Disable the button when editting, other conditions are used in the OrderButton component
           isSubmitting={submitting}
           setSubmitting={setSubmitting}
           setIsOrderSubmitted={setIsOrderSubmitted}

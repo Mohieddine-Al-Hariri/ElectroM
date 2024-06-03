@@ -345,7 +345,7 @@ const StartPage = ({
         rotationDegree={0}
         isObservedElementVisible={isCategoryFilterVisible}
         refe={topRef}
-        bgColor="bg-[#4bc0d9]"
+        bgColor="bg-primaryColor"
         textColor="text-white"
       />
     </div>

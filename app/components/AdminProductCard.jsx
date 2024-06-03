@@ -75,7 +75,7 @@ export const ProductStateMenu = ({
             "Item was deleted succefully. \nIf you can still see them, try refreshing the page.",
             {
               duration: 5000,
-              icon: <SVGTrash className="text-[#4bc0d9]  w-[32px]" />,
+              icon: <SVGTrash className="text-primaryColor  w-[32px]" />,
             }
           );
 
@@ -108,7 +108,7 @@ export const ProductStateMenu = ({
       <div>
         <div className="w-full flex justify-end">
           <button
-            className="p-1 fontColorGray hover:text-gray-100 hover:bg-[#4bc0d9] rounded-full focus:outline-none"
+            className="p-1 fontColorGray hover:text-gray-100 hover:bg-primaryColor rounded-full focus:outline-none"
             onClick={() => setIsOpen(!isOpen)}
           >
             <SVGX />
@@ -126,9 +126,9 @@ export const ProductStateMenu = ({
                     changeProductState(state);
                     setIsOpen(false);
                   }}
-                  className={`px-4 py-2 rounded-md hover:bg-[#4bc0d9] hover:text-white ${
+                  className={`px-4 py-2 rounded-md hover:bg-primaryColor hover:text-white ${
                     state === productState
-                      ? "text-white bg-[#4bc0d9]"
+                      ? "text-white bg-primaryColor"
                       : " fontColor "
                   }
                     flex w-full justify-between `}
@@ -197,7 +197,7 @@ const AdminProductCard = ({
     <div className="flex max-[400px]:flex-col relative w-full lg:w-1/4 md:w-1/3 pt-10 max-[400px]:gap-2 grow justify-between items-center rounded-md shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)] productCardBg fontColor p-2 ">
       <div className="absolute right-2 top-1 flex gap-2 justify-center items-center ">
         <button
-          className="p-1  rounded-full hover:bg-[#4bc0d9] hover:text-white"
+          className="p-1  rounded-full hover:bg-primaryColor hover:text-white"
           onClick={() => router.push(`Products/updateProduct/${product.id}`)}
         >
           <SVGPencil />
@@ -274,14 +274,14 @@ const AdminProductCard = ({
         ) : (
           <button
             onClick={() => setOpenMenu(true)}
-            className="border-2 hover:border-[#4bc0d9] border-gray-500 rounded-full px-3 py-1 mb-4  "
+            className="border-2 hover:border-primaryColor border-gray-500 rounded-full px-3 py-1 mb-4  "
           >
             <h1 className={`${stateTxtClr} font-bold`}>{productState}</h1>
           </button>
         )}
         <div className="px-2 ">
           <button
-            className="rounded-lg bg-[#4bc0d9] hover:bg-[#3ca8d0] py-1 max-[400px]:py-2 text-white w-full "
+            className="rounded-lg bg-primaryColor hover:bg-secondaryColor py-1 max-[400px]:py-2 text-white w-full "
             onClick={() => router.push(`/itemsDetails/${product.id}`)}
           >
             Details

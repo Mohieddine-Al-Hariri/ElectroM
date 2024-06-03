@@ -258,7 +258,7 @@ export const AddItemForm = ({
               if(prev > 0) return (prev - 1);
               else return prev
             } )}
-            className={` ${currentImageIndex === 0 ? "bg-gray-400" : "bg-[#4bc0d9] hover:bg-[#3ca8d0]"} text-white font-bold py-2 px-4 rounded-full focus:outline-none`}
+            className={` ${currentImageIndex === 0 ? "bg-gray-400" : "bg-primaryColor hover:bg-secondaryColor"} text-white font-bold py-2 px-4 rounded-full focus:outline-none`}
           >
             &lt;
           </button>
@@ -269,7 +269,7 @@ export const AddItemForm = ({
               if(prev < collection.products.length - 1) return (prev + 1);
               else return prev
             } )}
-            className={`${currentImageIndex === collection.products.length - 1 ? "bg-gray-400" : "bg-[#4bc0d9] hover:bg-[#3ca8d0]"} text-white font-bold py-2 px-4 rounded-full focus:outline-none`}
+            className={`${currentImageIndex === collection.products.length - 1 ? "bg-gray-400" : "bg-primaryColor hover:bg-secondaryColor"} text-white font-bold py-2 px-4 rounded-full focus:outline-none`}
           >
             &gt;
           </button>
@@ -357,7 +357,7 @@ export const AddItemForm = ({
         </p>
       )} */}
         {selectVariantError && (
-          <p className="text-[#4bc0d9] text-center ">
+          <p className="text-primaryColor text-center ">
             Please Select Your Desired Variant for Each Product
           </p>
         )}
@@ -687,7 +687,7 @@ const CollectionDetailsPage = ({ collection, user }) => {
                 </p>
               )}
               {selectVariantError && (
-                <p className="text-[#4bc0d9] text-center ">
+                <p className="text-primaryColor text-center ">
                   Please Select Your Desired Variant
                 </p>
               )}

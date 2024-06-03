@@ -448,7 +448,7 @@ const ItemsDetailsPage = ({ product, user }) => {
                 </p>
               )} */}
               {selectVariantError && (
-                <p className="text-[#4bc0d9] text-center max-sm:pb-8 ">
+                <p className="text-primaryColor text-center max-sm:pb-8 ">
                   Please Select Your Desired Variant
                 </p>
               )}

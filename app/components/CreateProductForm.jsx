@@ -44,7 +44,7 @@ const PillVariant = ({
       {/*  */}
       <div className="flex gap-2">
         <button
-          className="rounded-full bgColorGray aspect-square px-2 hover:text-[#4bc0d9] "
+          className="rounded-full bgColorGray aspect-square px-2 hover:text-primaryColor "
           onClick={(e) => decreaseQuantity(e, index)}
         >
           -
@@ -56,7 +56,7 @@ const PillVariant = ({
           ♾️
         </button>
         <button
-          className="rounded-full bgColorGray aspect-square px-2 hover:text-[#4bc0d9] "
+          className="rounded-full bgColorGray aspect-square px-2 hover:text-primaryColor "
           onClick={(e) => increaseQuantity(e, index)}
         >
           +
@@ -188,8 +188,8 @@ export const VariantsForm = ({ selectedPills, setSelectedPills }) => {
       )}
       <div className="flex space-x-4 mb-2 ">
         <div
-          className={`cursor-pointer p-2 border rounded hover:text-white hover:bg-[#4bc0d9] ${
-            showSizeInput ? "border-[#4bc0d9]" : "border-gray-300"
+          className={`cursor-pointer p-2 border rounded hover:text-white hover:bg-primaryColor ${
+            showSizeInput ? "border-primaryColor" : "border-gray-300"
           }`}
           onClick={() => {
             setShowSizeInput(!showSizeInput);
@@ -199,8 +199,8 @@ export const VariantsForm = ({ selectedPills, setSelectedPills }) => {
           Size
         </div>
         <div
-          className={`cursor-pointer p-2 border rounded hover:text-white hover:bg-[#4bc0d9] ${
-            showColorInput ? "border-[#4bc0d9]" : "border-gray-300"
+          className={`cursor-pointer p-2 border rounded hover:text-white hover:bg-primaryColor ${
+            showColorInput ? "border-primaryColor" : "border-gray-300"
           }`}
           onClick={() => {
             setShowColorInput(!showColorInput);
@@ -210,9 +210,9 @@ export const VariantsForm = ({ selectedPills, setSelectedPills }) => {
           Color
         </div>
         <div
-          className={`cursor-pointer p-2 border rounded hover:text-white hover:bg-[#4bc0d9] ${
+          className={`cursor-pointer p-2 border rounded hover:text-white hover:bg-primaryColor ${
             showSizeInput && showColorInput
-              ? "border-[#4bc0d9]"
+              ? "border-primaryColor"
               : "border-gray-300"
           }`}
           onClick={() => {
@@ -233,7 +233,7 @@ export const VariantsForm = ({ selectedPills, setSelectedPills }) => {
               id="Size"
               type="text"
               placeholder="Size"
-              className="w-full py-2 px-4 border rounded focus:outline-none focus:ring focus:border-[#4bc0d9]"
+              className="w-full py-2 px-4 border rounded focus:outline-none focus:ring focus:border-primaryColor"
               onKeyDown={(e) => {
                 if (e.key === "Enter" && e.target.value) {
                   e.preventDefault();
@@ -292,7 +292,7 @@ export const VariantsForm = ({ selectedPills, setSelectedPills }) => {
               id="Color"
               type="text"
               placeholder="Color"
-              className="w-full py-2 px-4 border rounded focus:outline-none focus:ring focus:border-[#4bc0d9]"
+              className="w-full py-2 px-4 border rounded focus:outline-none focus:ring focus:border-primaryColor"
               onKeyDown={(e) => {
                 if (e.key === "Enter" && e.target.value) {
                   e.preventDefault();
@@ -341,7 +341,7 @@ export const VariantsForm = ({ selectedPills, setSelectedPills }) => {
       )}
       {showSizeInput || showColorInput ? (
         <button
-          className="hover:bg-[#3ca8d0] bg-[#4bc0d9] text-white py-2 px-4 rounded cursor-pointer"
+          className="hover:bg-secondaryColor bg-primaryColor text-white py-2 px-4 rounded cursor-pointer"
           onClick={(e) => handleSubmitVariants(e)}
         >
           Check
@@ -538,7 +538,7 @@ const CreateProductForm = ({ categoriesData, isDarkMode, collectionsData }) => {
             required
             multiple
             onChange={handleImageUpload}
-            className="py-2 px-4 w-full border rounded focus:outline-none focus:ring focus:border-[#4bc0d9]"
+            className="py-2 px-4 w-full border rounded focus:outline-none focus:ring focus:border-primaryColor"
           />
 
           {imageError && <p className="text-red-500 text-sm">{imageError}</p>}
@@ -577,7 +577,7 @@ const CreateProductForm = ({ categoriesData, isDarkMode, collectionsData }) => {
             name="name"
             value={form.name}
             onChange={handleChange}
-            className="w-full py-2 px-4 border rounded focus:outline-none focus:ring focus:border-[#4bc0d9]"
+            className="w-full py-2 px-4 border rounded focus:outline-none focus:ring focus:border-primaryColor"
           />
         </div>
 
@@ -591,7 +591,7 @@ const CreateProductForm = ({ categoriesData, isDarkMode, collectionsData }) => {
             name="excerpt"
             value={form.excerpt}
             onChange={handleChange}
-            className="w-full py-2 px-4 border rounded focus:outline-none focus:ring focus:border-[#4bc0d9]"
+            className="w-full py-2 px-4 border rounded focus:outline-none focus:ring focus:border-primaryColor"
           />
         </div>
 
@@ -607,7 +607,7 @@ const CreateProductForm = ({ categoriesData, isDarkMode, collectionsData }) => {
             name="description"
             value={form.description}
             onChange={handleChange}
-            className="w-full py-2 px-4 border rounded focus:outline-none focus:ring focus:border-[#4bc0d9]"
+            className="w-full py-2 px-4 border rounded focus:outline-none focus:ring focus:border-primaryColor"
             rows="6"
           />
           <ReactMarkdown className="prose mt-2 ">
@@ -627,7 +627,7 @@ const CreateProductForm = ({ categoriesData, isDarkMode, collectionsData }) => {
             className="block text-lg font-semibold mb-2 w-full"
           >
             Price
-            <div className="flex items-center border rounded focus-within:border-[#4bc0d9]">
+            <div className="flex items-center border rounded focus-within:border-primaryColor">
               <span className="fontColorGray px-3">$</span>
               <input
                 type="number"
@@ -642,7 +642,7 @@ const CreateProductForm = ({ categoriesData, isDarkMode, collectionsData }) => {
                 //   const newValue = parseFloat(e.target.value);
                 //   setPrice(isNaN(newValue) ? "" : newValue);
                 // }}
-                className="w-full py-2 px-2 rounded focus:outline-none focus:ring focus:border-[#4bc0d9] [&::-webkit-inner-spin-button]:appearance-none"
+                className="w-full py-2 px-2 rounded focus:outline-none focus:ring focus:border-primaryColor [&::-webkit-inner-spin-button]:appearance-none"
               />
             </div>
           </label>
@@ -656,7 +656,7 @@ const CreateProductForm = ({ categoriesData, isDarkMode, collectionsData }) => {
                 className="block text-lg font-semibold mb-2 w-full"
               >
                 Previous Price
-                <div className="flex items-center border rounded focus-within:border-[#4bc0d9]">
+                <div className="flex items-center border rounded focus-within:border-primaryColor">
                   <span className="fontColorGray px-3">$</span>
                   <input
                     type="number"
@@ -667,7 +667,7 @@ const CreateProductForm = ({ categoriesData, isDarkMode, collectionsData }) => {
                     value={prevPrice}
                     onWheel={(e) => e.target.blur()} //Prevents scrolling between numbers when clicking on arrows
                     onChange={(e) => setPrevPrice(e.target.value)}
-                    className="w-full py-2 px-2 rounded focus:outline-none focus:ring focus:border-[#4bc0d9] [&::-webkit-inner-spin-button]:appearance-none"
+                    className="w-full py-2 px-2 rounded focus:outline-none focus:ring focus:border-primaryColor [&::-webkit-inner-spin-button]:appearance-none"
                   />
                 </div>
               </label>
@@ -684,7 +684,7 @@ const CreateProductForm = ({ categoriesData, isDarkMode, collectionsData }) => {
             name="tags"
             value={form.tags}
             onChange={handleChange}
-            className="w-full py-2 px-4 mb-2 border rounded focus:outline-none focus:ring focus:border-[#4bc0d9]"
+            className="w-full py-2 px-4 mb-2 border rounded focus:outline-none focus:ring focus:border-primaryColor"
           />
           <div className="flex flex-wrap gap-2">
             <button
@@ -730,7 +730,7 @@ const CreateProductForm = ({ categoriesData, isDarkMode, collectionsData }) => {
             styles={reactSelectStyles}
             // styles={isDarkMode ? reactSelectStyles : null}
             onChange={handleCategoryChange}
-            className="py-2 px-4 border rounded focus:outline-none focus:ring focus:border-[#4bc0d9] "
+            className="py-2 px-4 border rounded focus:outline-none focus:ring focus:border-primaryColor "
           />
         </div>
 
@@ -757,7 +757,7 @@ const CreateProductForm = ({ categoriesData, isDarkMode, collectionsData }) => {
             styles={reactSelectStyles}
             // styles={isDarkMode ? reactSelectStyles : null}
             onChange={handleCollectionChange}
-            className="py-2 px-4 border rounded focus:outline-none focus:ring focus:border-[#4bc0d9] "
+            className="py-2 px-4 border rounded focus:outline-none focus:ring focus:border-primaryColor "
           />
         </div>
 
@@ -770,7 +770,7 @@ const CreateProductForm = ({ categoriesData, isDarkMode, collectionsData }) => {
             name="state"
             value={form.state}
             onChange={handleChange}
-            className="w-full py-2 px-4 border rounded focus:outline-none focus:ring focus:border-[#4bc0d9]"
+            className="w-full py-2 px-4 border rounded focus:outline-none focus:ring focus:border-primaryColor"
           >
             <option value="Available">Available</option>
             <option value="Out Of Stock">Out Of Stock</option>
@@ -784,13 +784,13 @@ const CreateProductForm = ({ categoriesData, isDarkMode, collectionsData }) => {
             type="button"
             className=" max-sm:mb-6 py-3 px-6 rounded mr-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 inline-flex justify-center items-center"
           >
-            <SVGLoading className="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600 fill-[#4bc0d9]" />
+            <SVGLoading className="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600 fill-primaryColor" />
             Creating...
           </button>
         ) : (
           <button
             type="submit"
-            className=" max-sm:mb-6 hover:bg-[#3ca8d0] bg-[#4bc0d9] text-white py-3 px-6 rounded focus:outline-none focus:ring focus:border-[#4bc0d9]"
+            className=" max-sm:mb-6 hover:bg-secondaryColor bg-primaryColor text-white py-3 px-6 rounded focus:outline-none focus:ring focus:border-primaryColor"
           >
             Create Product
           </button>

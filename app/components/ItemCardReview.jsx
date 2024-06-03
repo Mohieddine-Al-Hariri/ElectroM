@@ -129,9 +129,9 @@ const ItemCardReview = ({ collection, product, userId, orderId, itemId, isFirstR
         </label>
 
         {isLoading ?
-          <button disabled={true} className="bgColor rounded-lg py-1 px-2 hover:bg-[#4bc0d9] flex justify-center items-center"><SVGLoading/></button>
+          <button disabled={true} className="bgColor rounded-lg py-1 px-2 hover:bg-primaryColor flex justify-center items-center"><SVGLoading/></button>
         :
-          <button disabled={isLoading} onClick={submitProductReview} className="bgColor rounded-lg py-1 px-2 hover:bg-[#4bc0d9] ">{isError ? "Please Rate before submiting" : "Submit"}</button>
+          <button disabled={isLoading} onClick={submitProductReview} className="bgColor rounded-lg py-1 px-2 hover:bg-primaryColor ">{isError ? "Please Rate before submiting" : "Submit"}</button>
         }
       </div>
       

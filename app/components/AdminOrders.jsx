@@ -311,8 +311,8 @@ const AdminOrders = ({ orders, hasNextPage, searchText, filteredState }) => {
           <label
             className={`relative cursor-pointer ${
               isSelectAll
-                ? "border-[#4bc0d9]"
-                : "border-gray-300 hover:border-[#4bc0d9]"
+                ? "border-primaryColor"
+                : "border-gray-300 hover:border-primaryColor"
             }  transition duration-300 p-1 pb-0 text-xl font-semibold opBorderColor flex min-[340px]:flex-col h-full justify-between items-center min-[280px]:gap-4 `}
             htmlFor="selectAll Orders"
           >
@@ -374,7 +374,7 @@ const AdminOrders = ({ orders, hasNextPage, searchText, filteredState }) => {
         rotationDegree={0}
         refe={topRef}
         isObservedElementVisible={isTopButtonVisible}
-        bgColor="bg-[#4bc0d9]"
+        bgColor="bg-primaryColor"
         textColor="text-white"
       />
     </div>

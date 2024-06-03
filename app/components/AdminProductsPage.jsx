@@ -258,7 +258,7 @@ const AdminProductsPage = ({
             } deleted succefully. \nIf you can still see them, try refreshing the page.`,
             {
               duration: 5000,
-              icon: <SVGTrash className="text-[#4bc0d9]  w-[32px]" />,
+              icon: <SVGTrash className="text-primaryColor  w-[32px]" />,
             }
           );
           router.refresh();
@@ -295,7 +295,7 @@ const AdminProductsPage = ({
       <div ref={topRef} className="p-2 ">
         <button
           onClick={() => setIsCreating(!isCreating)}
-          className="border-2 borderColor rounded-lg p-2 fontColor w-full hover:border-[#4bc0d9] hover:bg-[#4bc0d9] hover:text-white "
+          className="border-2 borderColor rounded-lg p-2 fontColor w-full hover:border-primaryColor hover:bg-primaryColor hover:text-white "
         >
           {isCreating ? "Products" : "Create"}
         </button>
@@ -339,8 +339,8 @@ const AdminProductsPage = ({
                 // TODO: FIX design
                 className={`relative ${
                   isSelectAll
-                    ? "border-[#4bc0d9]"
-                    : "border-gray-300 hover:border-[#4bc0d9]"
+                    ? "border-primaryColor"
+                    : "border-gray-300 hover:border-primaryColor"
                 }  transition duration-300 p-1 pb-0 text-xl font-semibold opBorderColor min-[500px]:flex-col min-[640px]:justify-between min-[500px]:justify-start min-[500px]:gap-4 flex max-[500px]:gap-4 `}
                 // htmlFor="selectAll Orders"
               >
@@ -355,7 +355,7 @@ const AdminProductsPage = ({
                     checked={isSelectAll}
                   />
                   {isDeleting ? ( //TODO: FIX Color for lightMode
-                    <SVGLoading className="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-[#4bc0d9]" />
+                    <SVGLoading className="inline w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-primaryColor" />
                   ) : selectedProducts.length > 0 ? (
                     <button
                       className=" border-b-2"
@@ -408,7 +408,7 @@ const AdminProductsPage = ({
         rotationDegree={0}
         refe={topRef}
         isObservedElementVisible={isTopButtonVisible}
-        bgColor="bg-[#4bc0d9]"
+        bgColor="bg-primaryColor"
         textColor="text-white"
       />
       <div ref={lastProductCardRef} style={{ visibility: "hidden" }} />

@@ -131,7 +131,7 @@ const CredentialsForm = ({ isModal }) => {
             An SMS should be sent to the phone number you provided.
           </h1>
 
-          <div className="bg-white text-[#4bc0d9] w-fit h-fit mx-auto p-4 rounded-full">
+          <div className="bg-white text-primaryColor w-fit h-fit mx-auto p-4 rounded-full">
             <BsFillShieldLockFill size={30} />
           </div>
           <label
@@ -148,13 +148,13 @@ const CredentialsForm = ({ isModal }) => {
             disabled={false}
             autoFocus
             renderSeparator={<span> </span>}
-            containerStyle="opt-container rounded-md w-[250px] h-[60px] flex justify-around text-[#4bc0d9] bg-[#4bc0d9] border-[#4bc0d9] border-2 p-2 mb-4"
+            containerStyle="opt-container rounded-md w-[250px] h-[60px] flex justify-around text-primaryColor bg-primaryColor border-primaryColor border-2 p-2 mb-4"
             inputStyle="rounded w-[18px] h-[28px]"
             renderInput={(props) => <input {...props} />}
           ></OtpInput>
           <button
             onClick={onOTPVerify}
-            className="bg-[#4bc0d9] hover:bg-[#3ca8d0] w-full flex gap-1 items-center justify-center py-2.5 text-white rounded"
+            className="bg-primaryColor hover:bg-secondaryColor w-full flex gap-1 items-center justify-center py-2.5 text-white rounded"
           >
             {loading && <CgSpinner size={20} className="mt-1 animate-spin" />}
             <span>Verify OTP</span>
@@ -181,7 +181,7 @@ const CredentialsForm = ({ isModal }) => {
       ) : (
         <div className="login__content ">
           {/* <Image fill src="/login-bg-2 .jpg" alt="login image" className="login__img"/> */}
-          {/* <h1 className="bg-white rounded text-[#4bc0d9] font-bold text-2xl p-2 w-40 h-20 flex justify-center items-center relative ml-[4.5rem] ">ELECTRO M</h1> */}
+          {/* <h1 className="bg-white rounded text-primaryColor font-bold text-2xl p-2 w-40 h-20 flex justify-center items-center relative ml-[4.5rem] ">ELECTRO M</h1> */}
           <Image
             fill
             src="/bg-login.png"
