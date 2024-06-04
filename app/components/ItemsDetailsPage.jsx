@@ -209,7 +209,7 @@ const ItemsDetailsPage = ({ product, user }) => {
     if (!isLoggedin) {
       const localCart = JSON.parse(localStorage.getItem("cart"));
       const id = uuidv4();
-      const chosenProductVariantId = product.productVariants.find(variant => variant.name === chosenProductVariant).id;
+      const chosenProductVariantId = product.productVariants.length > 0 ? product.productVariants.find(variant => variant.name === chosenProductVariant).id : "";
       const cartItem = {
         id,
         quantity,

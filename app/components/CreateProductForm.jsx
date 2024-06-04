@@ -376,6 +376,7 @@ export const VariantsForm = ({ selectedPills, setSelectedPills }) => {
 };
 
 const CreateProductForm = ({ categoriesData, isDarkMode, collectionsData }) => {
+  //TODO: Allow making quantity limit even without putting variants (if there is a variant limited, make it more important...).
   const [images, setImages] = useState([]);
   const [form, setForm] = useState({
     name: "",
@@ -522,6 +523,7 @@ const CreateProductForm = ({ categoriesData, isDarkMode, collectionsData }) => {
     }),
     // Other style overrides as needed...
   };
+
 
   return (
     <div className="lg:max-w-2xl w-full mx-auto p-6 bgColor colorScheme fontColor shadow-md rounded-lg fontColor max-lg:overflow-y-scroll pb-16">

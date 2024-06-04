@@ -32,7 +32,9 @@ const CartItem = ({
 
   // const [isUpdating, setIsUpdating] = useState(false);
   const [chosenQuantity, setChosenQuantity] = useState(quantity || 1);
-  const [chosenVariant, setChosenVariant] = useState(orderItemVariants[0].name || 1);
+  const [chosenVariant, setChosenVariant] = useState(
+    orderItemVariants[0].name || 1
+  );
 
   const [quantityLimit, setQuantityLimit] = useState(1); //control it based on variant.
   const [isReachedLimit, setIsReachedLimit] = useState(false);
@@ -76,6 +78,10 @@ const CartItem = ({
   // }, [chosenVariant])
 
   const increaseQuantity = () => {
+    if(product.productVariants.length === 0) {
+      setChosenQuantity((prev) => prev + 1);
+      return
+    }
     if (quantityLimit !== null && chosenQuantity + 1 > quantityLimit) {
       setIsReachedLimit(true);
       setChosenQuantity(quantityLimit);
@@ -189,8 +195,7 @@ const CartItem = ({
           >
             <button
               onClick={() => {
-                if (chosenQuantity > 1)
-                  setChosenQuantity((prev) => prev - 1);
+                if (chosenQuantity > 1) setChosenQuantity((prev) => prev - 1);
                 console.log("-1", chosenQuantity - 1);
               }}
               className="rounded-full bgColor w-10 h-10 p-2 text-4xl flex justify-center items-center"
@@ -217,7 +222,7 @@ const CartItem = ({
         {collection ? (
           `${orderItemVariants[0]?.name}...`
         ) : isEdittingThisItem ? (
-          <div>
+          <div className={product.productVariants?.length > 0 ? "" : "hidden"}>
             <select
               onChange={(e) => changeChosenVariant(e.target.value)}
               name="chose variant"
@@ -243,7 +248,9 @@ const CartItem = ({
 
       <div className="text-xl fontColor max-[470px]:flex gap-2 justify-center flex-wrap">
         <h1>Total</h1>
-        <h1 className="font-bold text-center">${isEdittingThisItem? chosenQuantity * product.price : total}</h1>
+        <h1 className="font-bold text-center">
+          ${isEdittingThisItem ? chosenQuantity * product.price : total}
+        </h1>
       </div>
 
       <div className="flex justify-center gap-2 items-center">
@@ -256,9 +263,12 @@ const CartItem = ({
                 <SVGCancel className="hover:text-yellow-500" />
               </button>
               <button
-                onClick={() =>{
+                onClick={() => {
                   //Prevent Unnecassary Render
-                  if(chosenVariant === orderItemVariants[0]?.name && chosenQuantity === quantity) {
+                  if (
+                    chosenVariant === orderItemVariants[0]?.name &&
+                    chosenQuantity === quantity
+                  ) {
                     setIsEditting("");
                     return;
                   }
@@ -267,8 +277,8 @@ const CartItem = ({
                     chosenVariant,
                     chosenQuantity,
                     product.price,
-                    orderItemVariants[0]?.id,
-                  )
+                    orderItemVariants[0]?.id
+                  );
                 }}
               >
                 <SVGCheck />
