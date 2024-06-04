@@ -214,13 +214,24 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
     variantName,
     quantity,
     price,
-    variantId
+    variantId,
+    isNoVariantProduct
   ) => {
-    if (!id || !variantName || !quantity || !price || !variantId) return; //TODO: handle error
+    if (
+      !id ||
+      !quantity ||
+      !price ||
+      (!isNoVariantProduct && (!variantId || !variantName))
+    ) {
+      setIsEditting("");
+      return;
+    } //TODO: handle error
     if (!user) {
       // const item = items.find(item => item.id === id)
       // item = {...item,  }
-      const orderItemVariants= [{ name: variantName, id:variantId }]
+      const orderItemVariants = isNoVariantProduct
+        ? [{ name: "", id: "" }]
+        : [{ name: variantName, id: variantId }];
       const updatedCart = items.map((item) =>
         item.id === id
           ? {
@@ -228,11 +239,10 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
               quantity,
               total: price * quantity,
               orderItemVariants,
-
             }
           : item
       );
-      console.log("updatedCart: ", updatedCart)
+      console.log("updatedCart: ", updatedCart);
       localStorage.setItem("cart", JSON.stringify(updatedCart));
       setIsEditting("");
       setIsUpdatingItem(false);

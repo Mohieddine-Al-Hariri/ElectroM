@@ -32,16 +32,14 @@ const CartItem = ({
 
   // const [isUpdating, setIsUpdating] = useState(false);
   const [chosenQuantity, setChosenQuantity] = useState(quantity || 1);
-  const [chosenVariant, setChosenVariant] = useState(
-    orderItemVariants[0].name || 1
-  );
+  const [chosenVariant, setChosenVariant] = useState(orderItemVariants[0]?.name);
 
   const [quantityLimit, setQuantityLimit] = useState(1); //control it based on variant.
   const [isReachedLimit, setIsReachedLimit] = useState(false);
 
   //TODO: If the user chose a variant while having greater amount of items chosen, it should automatically decrease quantity while warning the user it did using some animation.
 
-  console.log(item);
+  // console.log(item);
 
   useEffect(() => {
     // localStorage.removeItem("cart")
@@ -78,9 +76,9 @@ const CartItem = ({
   // }, [chosenVariant])
 
   const increaseQuantity = () => {
-    if(product.productVariants.length === 0) {
+    if (product.productVariants.length === 0) {
       setChosenQuantity((prev) => prev + 1);
-      return
+      return;
     }
     if (quantityLimit !== null && chosenQuantity + 1 > quantityLimit) {
       setIsReachedLimit(true);
@@ -90,14 +88,12 @@ const CartItem = ({
       }, 2000);
       return;
     }
-    console.log("+1", chosenQuantity);
 
     setChosenQuantity((prev) => prev + 1);
   };
 
   const changeChosenVariant = (selectedVariant) => {
     setChosenVariant(selectedVariant);
-    console.log("selectedVariant: ", selectedVariant);
     const selectedVariantQuantity = product.productVariants.find(
       (productVariant) => productVariant.name === selectedVariant
     )?.quantity;
@@ -196,7 +192,6 @@ const CartItem = ({
             <button
               onClick={() => {
                 if (chosenQuantity > 1) setChosenQuantity((prev) => prev - 1);
-                console.log("-1", chosenQuantity - 1);
               }}
               className="rounded-full bgColor w-10 h-10 p-2 text-4xl flex justify-center items-center"
             >
@@ -272,12 +267,16 @@ const CartItem = ({
                     setIsEditting("");
                     return;
                   }
+                  let isNoVariantProduct = false;
+                  if (product.productVariants?.length === 0)
+                    isNoVariantProduct = true;
                   handleUpdateItem(
                     id,
                     chosenVariant,
                     chosenQuantity,
                     product.price,
-                    orderItemVariants[0]?.id
+                    orderItemVariants[0]?.id,
+                    isNoVariantProduct
                   );
                 }}
               >
