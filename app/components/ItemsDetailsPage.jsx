@@ -209,16 +209,18 @@ const ItemsDetailsPage = ({ product, user }) => {
     if (!isLoggedin) {
       const localCart = JSON.parse(localStorage.getItem("cart"));
       const id = uuidv4();
+      const chosenProductVariantId = product.productVariants.find(variant => variant.name === chosenProductVariant).id;
       const cartItem = {
         id,
         quantity,
         total: totalPrice,
-        orderItemVariants: [{name: chosenProductVariant}],
+        orderItemVariants: [{name: chosenProductVariant, id: chosenProductVariantId}],
         product: {
           imageUrls: [{ url: product.imageUrls[0].url }],
           name: product.name,
-          price: product.excerpt,
-          id: product.id
+          price: product.price,
+          id: product.id,
+          productVariants: [...product.productVariants],
         }
       }
       const updatedCart = localCart

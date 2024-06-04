@@ -26,7 +26,7 @@ export const OrderButton = ({
   setSelectedItemsIds,
   itemsNames,
   setError,
-  isDisabled
+  isDisabled,
 }) => {
   const router = useRouter();
 
@@ -56,7 +56,8 @@ export const OrderButton = ({
     }
   };
 
-  const isButtonDisabled = (isSubmitting || !itemsIds.length || isDisabled) ? false : true;
+  const isButtonDisabled =
+    isSubmitting || !itemsIds.length || isDisabled ? false : true;
   return (
     <div className="pb-20 ">
       <button
@@ -136,11 +137,10 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
   const [isEditting, setIsEditting] = useState("");
   const [isUpdatingItem, setIsUpdatingItem] = useState(false);
 
-
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const router = useRouter();
-  //TODO: allow user to see product details when clicking on an item
+
   useEffect(() => {
     const isDarkModeLocal = JSON.parse(localStorage.getItem("isDarkMode"));
     if (isDarkModeLocal) document.body.classList.add("dark");
@@ -159,43 +159,95 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
 
   const deleteItem = async (itemId) => {
     setError(false);
-    try {
-      // Check if a user is authenticated
-      if (!user) {
-        // If not authenticated, update the local cart (if it exists)
-        const localCart = JSON.parse(localStorage.getItem("cart"));
-        if (localCart) {
-          const updatedCart = localCart.filter((item) => item.id !== itemId);
-          localStorage.setItem("cart", JSON.stringify(updatedCart));
-          setItems(updatedCart);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "All selected items will be deleted",
+      icon: "warning",
+      iconColor: "#4bc0d9",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      customClass: "staticBgColor fontColorGray",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          // Check if a user is authenticated
+          if (!user) {
+            // If not authenticated, update the local cart (if it exists)
+            const localCart = JSON.parse(localStorage.getItem("cart"));
+            if (localCart) {
+              const updatedCart = localCart.filter(
+                (item) => item.id !== itemId
+              );
+              localStorage.setItem("cart", JSON.stringify(updatedCart));
+              setItems(updatedCart);
+            }
+          } else {
+            // If authenticated, remove the item from the user's cart
+            await removeItemfromCart(itemId);
+            toast.success(
+              `Item was deleted succefully. \nIf you can still see them, try refreshing the page.`,
+              {
+                duration: 5000,
+                icon: <SVGTrash className="text-primaryColor  w-[32px]" />,
+                //TODO: Learn how to use animation.json + implement it
+              }
+            );
+            // Refresh the router to reflect changes
+            router.refresh();
+            // Update the state with the latest cart items (assuming "cartItems" is updated elsewhere)
+            setItems(cartItems);
+          }
+        } catch (error) {
+          // Handle errors that may occur during item deletion (e.g., network errors)
+          console.error("Error deleting item:", error);
+          // Set an error flag or perform error handling as needed
+          setError(true);
         }
-      } else {
-        // If authenticated, remove the item from the user's cart
-        await removeItemfromCart(itemId);
-        // Refresh the router to reflect changes
-        router.refresh();
-        // Update the state with the latest cart items (assuming "cartItems" is updated elsewhere)
-        setItems(cartItems);
       }
-    } catch (error) {
-      // Handle errors that may occur during item deletion (e.g., network errors)
-      console.error("Error deleting item:", error);
-      // Set an error flag or perform error handling as needed
-      setError(true);
-    }
+    });
   };
 
-  const handleUpdateItem = async (id, variantName, quantity, price, variantId) => {
-    if(!user) return
-    if(!id || !variantName || !quantity || !price || !variantId) return //TODO: handle error
-    console.log(id, variantName, quantity, price, variantId)
+  const handleUpdateItem = async (
+    id,
+    variantName,
+    quantity,
+    price,
+    variantId
+  ) => {
+    if (!id || !variantName || !quantity || !price || !variantId) return; //TODO: handle error
+    if (!user) {
+      // const item = items.find(item => item.id === id)
+      // item = {...item,  }
+      const orderItemVariants= [{ name: variantName, id:variantId }]
+      const updatedCart = items.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              quantity,
+              total: price * quantity,
+              orderItemVariants,
+
+            }
+          : item
+      );
+      console.log("updatedCart: ", updatedCart)
+      localStorage.setItem("cart", JSON.stringify(updatedCart));
+      setIsEditting("");
+      setIsUpdatingItem(false);
+      setItems(updatedCart);
+      router.refresh();
+      return;
+    }
+    console.log(id, variantName, quantity, price, variantId);
     setIsUpdatingItem(true);
-    await updateOrderItem({id, variantName, quantity, price, variantId});
-    
+    await updateOrderItem({ id, variantName, quantity, price, variantId });
+
     setIsEditting("");
     setIsUpdatingItem(false);
     router.refresh();
-  }
+  };
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
@@ -296,7 +348,9 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
           <React.Fragment>
             <h3 className="p-4 pb-2 text-2xl font-semibold fontColorGray border-b border-gray-300 flex justify-between items-end max-[190px]:flex-col">
               <span>
-                {items?.length === 1
+                {items?.length === undefined
+                  ? `0 Items`
+                  : items?.length === 1
                   ? `${items?.length} Item`
                   : `${items?.length} Items`}
               </span>
@@ -317,7 +371,9 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
             {items?.length > 0 && (
               <div
                 className={`flex items-center gap-4 pl-4 py-2 ${
-                  selectedItemsIds.length > 0 ? "bg-primaryColor" : "bg-gray-100"
+                  selectedItemsIds.length > 0
+                    ? "bg-primaryColor"
+                    : "bg-gray-100"
                 } rounded-md shadow-md mt-4 mb-2`}
               >
                 <label
@@ -364,8 +420,10 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
                   setSelectedItemsIds={setSelectedItemsIds}
                   selectAll={selectAll}
                   handleUpdateItem={handleUpdateItem}
-                  isEditting={isEditting.length > 0? true : false}
-                  isEdittingThisItem={isEditting.length > 0 && isEditting === item.id}
+                  isEditting={isEditting.length > 0 ? true : false}
+                  isEdittingThisItem={
+                    isEditting.length > 0 && isEditting === item.id
+                  }
                   setIsEditting={setIsEditting}
                   isUpdatingItem={isUpdatingItem}
                 />

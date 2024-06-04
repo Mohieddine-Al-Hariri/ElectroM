@@ -38,11 +38,11 @@ const CartItem = ({
   const [isReachedLimit, setIsReachedLimit] = useState(false);
 
   //TODO: If the user chose a variant while having greater amount of items chosen, it should automatically decrease quantity while warning the user it did using some animation.
-  // TODO: Add are you sure you want to delete item
 
   console.log(item);
 
   useEffect(() => {
+    // localStorage.removeItem("cart")
     if (!isCollection) {
       product.productVariants.map((productVariant) => {
         if (productVariant.name === orderItemVariants[0].name) {
@@ -189,7 +189,7 @@ const CartItem = ({
           >
             <button
               onClick={() => {
-                if (chosenQuantity > 1 && product.state === "Available")
+                if (chosenQuantity > 1)
                   setChosenQuantity((prev) => prev - 1);
                 console.log("-1", chosenQuantity - 1);
               }}
@@ -198,6 +198,7 @@ const CartItem = ({
               -
             </button>
             <h3 className="text-2xl">{chosenQuantity}</h3>
+            {/* TODO: Allow quantity to be typed using input of type numeric */}
             <button
               onClick={increaseQuantity}
               className="rounded-full bgColor w-10 h-10 p-2 text-4xl flex justify-center items-center"
@@ -222,6 +223,7 @@ const CartItem = ({
               name="chose variant"
               id="chose variant"
               className="colorScheme w-full py-2 px-4 border rounded focus:focus-glow"
+              value={chosenVariant}
             >
               {product.productVariants.map((productVariant) => (
                 <option
@@ -255,6 +257,7 @@ const CartItem = ({
               </button>
               <button
                 onClick={() =>{
+                  //Prevent Unnecassary Render
                   if(chosenVariant === orderItemVariants[0]?.name && chosenQuantity === quantity) {
                     setIsEditting("");
                     return;

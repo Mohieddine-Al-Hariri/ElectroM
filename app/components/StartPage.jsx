@@ -80,11 +80,12 @@ const StartPage = ({
               },
             },
           };
-
+      const orderItemVariantsWithoutId = item.orderItemVariants.map(({ id, ...rest }) => rest);
+      
       return {
         quantity: item.quantity,
         total: item.total,
-        orderItemVariants: { create: item.orderItemVariants },
+        orderItemVariants: { create: orderItemVariantsWithoutId },
         variant: item.variant,
         ...connectTo,
       };

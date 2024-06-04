@@ -43,7 +43,7 @@ export async function POST(req) {
     //   count
     // }
 
-
+    console.log("updatedCart: ", updatedCart)
     return new Response(JSON.stringify(updatedCart.updateCart));
   
   } catch (error) {
