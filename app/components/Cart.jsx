@@ -136,6 +136,7 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
 
   const [isEditting, setIsEditting] = useState("");
   const [isUpdatingItem, setIsUpdatingItem] = useState(false);
+  const [updatingError, setUpdatingError] = useState("");
 
   const [isRefreshing, setIsRefreshing] = useState(false);
 
@@ -217,47 +218,71 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
     variantId,
     isNoVariantProduct
   ) => {
+    // Check if required parameters are missing or invalid
     if (
       !id ||
       !quantity ||
       !price ||
       (!isNoVariantProduct && (!variantId || !variantName))
     ) {
-      setIsEditting("");
+      // If validation fails, set an error message and exit the function
+      setUpdatingError("Something went wrong, please try again later.");
       return;
-    } //TODO: handle error
+    }
+  
+    // Check if user is not authenticated
     if (!user) {
-      // const item = items.find(item => item.id === id)
-      // item = {...item,  }
+      // Define order item variants based on whether the product has variants or not
       const orderItemVariants = isNoVariantProduct
         ? [{ name: "", id: "" }]
         : [{ name: variantName, id: variantId }];
+      
+      // Update the cart items in the local state
       const updatedCart = items.map((item) =>
         item.id === id
           ? {
               ...item,
               quantity,
-              total: price * quantity,
-              orderItemVariants,
+              total: price * quantity,  // Calculate total price
+              orderItemVariants,        // Update item variants
             }
           : item
       );
-      console.log("updatedCart: ", updatedCart);
+      
+      // Save the updated cart to local storage
       localStorage.setItem("cart", JSON.stringify(updatedCart));
+      
+      // Clear any updating error message
+      setUpdatingError("");
+      
+      // Reset editing and updating states
       setIsEditting("");
       setIsUpdatingItem(false);
+      
+      // Update the items state with the new cart
       setItems(updatedCart);
+      
+      // Refresh the router to reflect changes
       router.refresh();
-      return;
+      return; // Exit the function as update for unauthenticated user is done
     }
-    console.log(id, variantName, quantity, price, variantId);
+  
+    // If user is authenticated, set updating state to true
     setIsUpdatingItem(true);
+    
+    // Call the API to update the order item with provided details
     await updateOrderItem({ id, variantName, quantity, price, variantId });
-
+    
+    // Clear any updating error message
+    setUpdatingError("");
+    
+    // Reset editing and updating states
     setIsEditting("");
     setIsUpdatingItem(false);
+    
+    // Refresh the router to reflect changes
     router.refresh();
-  };
+  };  
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
@@ -436,6 +461,7 @@ const Cart = ({ cartItems, user, hasNextPage }) => {
                   }
                   setIsEditting={setIsEditting}
                   isUpdatingItem={isUpdatingItem}
+                  updatingError={updatingError}
                 />
               );
             })}

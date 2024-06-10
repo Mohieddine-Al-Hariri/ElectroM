@@ -15,6 +15,7 @@ const CartItem = ({
   setIsEditting,
   isEdittingThisItem,
   isUpdatingItem,
+  updatingError,
 }) => {
   const {
     quantity,
@@ -103,9 +104,9 @@ const CartItem = ({
 
   return (
     <div
-      className={`flex max-[470px]:flex-col max-[470px]:gap-2 max-[470px]:py-2 justify-between items-center w-full lg:w-1/3 grow px-2 border-2 borderColor rounded-lg py-1 ${
+      className={`flex relative max-[470px]:flex-col max-[470px]:gap-2 max-[470px]:py-2 justify-between items-center w-full lg:w-1/3 grow px-2 border-2 borderColor rounded-lg py-1 ${
         isEditting && !isEdittingThisItem && "brightness-50"
-      } `}
+      } ${updatingError ? "pb-6 max-[470px]:pb-12" : ""}`}
     >
       <div className="flex items-center gap-2 max-[470px]:mb-2">
         <label
@@ -275,6 +276,7 @@ const CartItem = ({
                     chosenVariant,
                     chosenQuantity,
                     product.price,
+                    // undefined,
                     orderItemVariants[0]?.id,
                     isNoVariantProduct
                   );
@@ -311,6 +313,7 @@ const CartItem = ({
           )}
         </button>
       </div>
+      {isEdittingThisItem && updatingError ? <div className="text-sm text-red-500 absolute bottom-0 right-1 max-[470px]:right-1/2 max-[470px]:translate-x-1/2  max-[640px]:max-w-[160px] max-[470px]:w-full max-[470px]:max-w-full">{updatingError}</div> : null}
     </div>
   );
 };
