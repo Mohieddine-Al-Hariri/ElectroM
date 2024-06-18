@@ -249,7 +249,7 @@ const StartPage = ({
   // TODO: Make the full title and excerpt appear when the item is hovered, unless it is too long
 
   return (
-    <div>
+    <div id="startPage">
       <div className="w-full flex justify-center max-sm:items-center items-end  max-sm:gap-2 gap-4 mb-4 max-sm:flex-col fontColor">
         <FilterSelect
           refe={topRef}
@@ -267,10 +267,10 @@ const StartPage = ({
       <div className=" text-neutral-700 fontColorGray text-xl font-bold leading-normal ml-5 gap-2 flex ">
         <span>Items</span>
       </div>
-      <div className="w-full h-full flex items-start justify-around lg:justify-between flex-wrap gap-1 p-4 relative ">
+      <div className="w-full h-full flex items-start justify-around lg:justify-between flex-wrap gap-3 p-4 relative ">
         <Fade
           triggerOnce={true}
-          className="overflow-hidden rounded-lg h-[200px] max-w-[356px] w-full grow hover:scale-[1.1] hover:z-10 relative duration-200 "
+          className="overflow-hidden rounded-lg h-[200px] max-sm:w-full max-md:w-1/2 max-lg:w-1/3 max-xl:w-1/4 w-1/5 max-w-[400px] grow hover:scale-[1.1] hover:z-10 relative duration-200"
         >
           {productsState?.map(({ node }) => (
             <ProductCard

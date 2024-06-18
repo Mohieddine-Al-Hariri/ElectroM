@@ -76,7 +76,7 @@ const ProductCard = ({
   return (
     <Link
       href={isCollection ? `/collectionDetails/${id}` : `/itemsDetails/${id}`}
-      className="relative shadow-lg "
+      className="relative shadow-lg grow"
     >
       {(isCollection || isOnSale) && (
         <SVGComponent className="absolute -top-2 -right-2 z-10" />

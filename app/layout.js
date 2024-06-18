@@ -16,7 +16,7 @@ export default async function RootLayout({ children, authModal }) {
   const session = await getServerSession(authOptions);
 
   return (
-    <html lang="en" className='fixed top-0 bottom-0 left-0 right-0 overflow-hidden flex justify-center items-center '>
+    <html lang="en" className='fixed top-0 bottom-0 left-0 right-0 overflow-hidden flex justify-center items-center grainy'>
       <body className={`${inter.className} bg-white transition-colors duration-100 bg-no-repeat h-full w-screen `}>
         {/*TODO: {authModal}*/}
         {children}

@@ -94,7 +94,8 @@ body {
 }
 body.dark{
   --Bg: #343434;
-  --bgColor: linear-gradient(to top, #000, #131313, #161616);
+  --bgColor: #020817;
+  /* --bgColor: linear-gradient(to top, #000, #131313, #161616); */
   --staticBgColor: #161616;
   --bgColorGray: #343434;
   --opBgColor: #f3f3f3 ;
@@ -579,3 +580,96 @@ button {
   background: none!important;
   border: none;
 }
+
+
+
+/* Accent colors are used to draw attention to key elements of a design. These colors stand out against the primary and background colors, and they are used sparingly to highlight important areas such as buttons, links, notifications, and other elements that you want users to notice or interact with.
+
+In your e-commerce website, accent colors can help guide the user's attention to:
+
+Call-to-action buttons (e.g., "Buy Now," "Add to Cart")
+Highlights and hover states
+Special offers or promotions
+Important notifications or alerts
+Links or interactive elements
+
+Summary of Accent Color Usage:
+Primary Accent Color: Used for the most important elements you want to stand out.
+Secondary Accent Color: Used for secondary elements that also need attention but are not as critical as the primary accents.
+
+
+Dark Mode Palette
+Background Color (Very Dark Blue)
+
+Hex: #020817
+Usage: Main background
+Primary Accent Color (Bright Cyan)
+
+Hex: #5ce1e6
+Usage: Primary buttons, highlights, product image backgrounds
+Secondary Accent Color (Light Cyan)
+
+Hex: #a4f0f2
+Usage: Hover effects, secondary buttons
+Text Color (Light Gray)
+
+Hex: #d1d1d1
+Usage: Main text
+Secondary Text Color (Medium Gray)
+
+Hex: #8a8a8a
+Usage: Secondary text, placeholders
+Highlight Color (Coral)
+
+Hex: #ff6f61
+Usage: Alerts, error messages, special promotions
+Accent Color (Goldenrod)
+
+Hex: #ffcc33
+Usage: Highlights, sale tags
+Visual Representation
+ #020817 (Background Color)
+ #5ce1e6 (Primary Accent Color)
+ #a4f0f2 (Secondary Accent Color)
+ #d1d1d1 (Text Color)
+ #8a8a8a (Secondary Text Color)
+ #ff6f61 (Highlight Color)
+ #ffcc33 (Accent Color)
+Light Mode Palette
+Background Color (White)
+
+Hex: #ffffff
+Usage: Main background
+Primary Accent Color (Bright Cyan)
+
+Hex: #5ce1e6
+Usage: Primary buttons, highlights, product image backgrounds
+Secondary Accent Color (Medium Blue)
+
+Hex: #284b63
+Usage: Secondary buttons, borders
+Text Color (Dark Blue)
+
+Hex: #020817
+Usage: Main text
+Secondary Text Color (Dark Gray)
+
+Hex: #4a4a4a
+Usage: Secondary text, placeholders
+Highlight Color (Coral)
+
+Hex: #ff6f61
+Usage: Alerts, error messages, special promotions
+Accent Color (Goldenrod)
+
+Hex: #ffcc33
+Usage: Highlights, sale tags
+Visual Representation
+ #ffffff (Background Color)
+ #5ce1e6 (Primary Accent Color)
+ #284b63 (Secondary Accent Color)
+ #020817 (Text Color)
+ #4a4a4a (Secondary Text Color)
+ #ff6f61 (Highlight Color)
+ #ffcc33 (Accent Color)
+Using these palettes will help create a consistent and engaging user experience, ensuring important elements stand out and users can easily navigate your e-commerce website. */
