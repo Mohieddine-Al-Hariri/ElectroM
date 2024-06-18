@@ -20,7 +20,7 @@ const HeroCarousel = () => {
         {
           images.map((image, index) => (
             <div key={`Hero Carousel -${index}`}>
-              <Image className="object-cover " src={`/${image}`} width={500} height={500} alt={`Carousel Image ${index + 1}`} />
+              <Image className="object-cover " alt={`product: ${image.slice(0,-4)}`} src={`/${image}`} width={500} height={500} alt={`Carousel Image ${index + 1}`} />
             </div>
           ))
         }

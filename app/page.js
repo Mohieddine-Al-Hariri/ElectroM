@@ -5,6 +5,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import HeroCarousel from "./components/HeroCarousel";
 import HeroScrollBtn from "./components/HeroScrollBtn";
+import HeroSignInBtn from "./components/HeroSignInBtn";
 
 export async function getProductsData(searchText, category, onlyOnSale) {
   const products =
@@ -75,13 +76,21 @@ export default async function Home({ searchParams: { searchText, category } }) {
     <main className="h-full w-full">
       <div className="w-full h-full gap-12 relative bgColor flex-col justify-start items-center py-10 inline-flex overflow-y-scroll">
         <div className="absolute left-2 top-2 group flex items-center gap-2 ">
-          <Image className="w-[50px]" src="/Logo.png" width={510} height={490} />
-          <h1 className=" group-hover:text-lg fontColor transition-all duration-100 font-bold text-[0px]">Electro M</h1>
+          <Image
+            className="w-[50px]"
+            src="/Logo.png"
+            alt="Logo: Electro M"
+            width={510}
+            height={490}
+          />
+          <h1 className=" group-hover:text-lg fontColor transition-all duration-100 font-bold text-[0px]">
+            Electro M
+          </h1>
         </div>
-        <div className="w-full flex justify-between items-center relative rounded-[20px] px-4 h-full">
+        <div className="w-full flex justify-between items-center relative rounded-[20px] px-4 pt-10 max-sm:pt-20 pb-20 h-full">
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 pt-40 dark:left-0 left-80 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+            className="pointer-events-none absolute inset-x-0 pt-40 dark:left-0 left-80 max-sm:left-0 transform-gpu overflow-hidden blur-3xl sm:-top-80"
           >
             <div
               style={{
@@ -92,7 +101,7 @@ export default async function Home({ searchParams: { searchText, category } }) {
             />
           </div>
 
-          <div className="w-1/2 max-sm:w-full">
+          <div className="w-1/2 max-sm:w-full ">
             <div className=" text-neutral-700 fontColor text-6xl font-bold mb-4 ">
               Elevate Your{" "}
               <span className="text-primaryColor">Mobile Experience</span>
@@ -102,7 +111,13 @@ export default async function Home({ searchParams: { searchText, category } }) {
               {/* Discover the Latest in Smart Accessories */}
             </div>
 
-            <HeroScrollBtn />
+            <div className="flex gap-2">
+              <HeroScrollBtn />
+              <HeroSignInBtn user={sessionData?.user} />
+              {/* <button className="border-primaryColor border-2 px-11 transition-colors duration-100 py-2 rounded-sm text-primaryColor hover:text-white hover:bg-primaryColor">
+                Sign In
+              </button> */}
+            </div>
           </div>
 
           <div className="w-1/2 flex justify-end px-4 max-sm:hidden ">

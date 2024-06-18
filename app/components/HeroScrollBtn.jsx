@@ -10,7 +10,7 @@ const HeroScrollBtn = () => {
         scroll();
         // e.preventDefault();
       }}
-      className="bg-primaryColor px-8 py-2 rounded-sm text-white hover:bg-secondaryColor"
+      className="bg-primaryColor border-2 border-primaryColor px-8 py-2 rounded-sm text-white hover:bg-transparent transition-colors duration-100 hover:text-primaryColor "
     >
       Shop Now
     </button>
