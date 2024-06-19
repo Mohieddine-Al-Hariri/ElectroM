@@ -74,7 +74,7 @@ export default async function Home({ searchParams: { searchText, category } }) {
 
   return (
     <main className="h-full w-full">
-      <div className="w-full h-full gap-12 relative bgColor flex-col justify-start items-center py-10 inline-flex overflow-y-scroll">
+      <div className="w-full h-full gap-12 relative bgColor grainy flex-col justify-start items-center py-10 inline-flex overflow-y-scroll">
         <div className="absolute left-2 top-2 group flex items-center gap-2 ">
           <Image
             className="w-[50px]"
@@ -103,8 +103,8 @@ export default async function Home({ searchParams: { searchText, category } }) {
 
           <div className="w-1/2 max-sm:w-full ">
             <div className=" text-neutral-700 fontColor text-6xl font-bold mb-4 ">
-              Elevate Your{" "}
-              <span className="text-primaryColor">Mobile Experience</span>
+              <span className="dark:drop-shadow-[0_0_0.3rem_#ffffff70]">Elevate Your{" "}</span>
+              <span className="text-primaryColor dark:drop-shadow-[0_0_0.3rem_#4bc0d970]">Mobile Experience</span>
             </div>
             <div className=" text-secondaryColor text-4xl font-semibold mt-0 mb-6  ">
               Empower Your Tech Life with Our Accessories Delight!

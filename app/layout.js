@@ -17,7 +17,7 @@ export default async function RootLayout({ children, authModal }) {
 
   return (
     <html lang="en" className='fixed top-0 bottom-0 left-0 right-0 overflow-hidden flex justify-center items-center grainy'>
-      <body className={`${inter.className} bg-white transition-colors duration-100 bg-no-repeat h-full w-screen `}>
+      <body className={`${inter.className} bg-white transition-colors duration-100 bg-no-repeat h-full w-screen grainy`}>
         {/*TODO: {authModal}*/}
         {children}
         <Navbar userSlug={session?.user?.slug} userRole={session?.user?.userRole} cartId={session?.user?.cartId} />

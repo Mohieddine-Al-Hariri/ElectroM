@@ -71,32 +71,53 @@ const CredentialsForm = ({ isModal }) => {
     } else {
       console.log("Error", signInResponse);
       setError(signInResponse.error);
+      setLoading(false);
     }
   };
+
   function onSignup(e) {
     e.preventDefault();
-    if(loading) return
-    if(ph.length < 4) {toast.error("Please enter your phone number", {icon:"!"}); return} //TODO: Change toast icon //https://react-hot-toast.com/docs/toast
-    if(formData.password.length < 4) {toast.error("To ensure your account is secure, please enter a longer password", {icon:"❕"}); return}
-    if(!isLogIn && (!formData.firstName || !formData.lastName || !dateState)) {toast.error("Please fill all the fields", {icon:"❗"}); return}
-      
+    if (loading) return;
+    if (ph.length < 4) {
+      toast.error("Please enter your phone number", { icon: "!" });
+      return;
+    } //TODO: Change toast icon //https://react-hot-toast.com/docs/toast
+    if (formData.password.length < 4) {
+      toast.error(
+        "To ensure your account is secure, please enter a longer password",
+        { icon: "❕" }
+      );
+      return;
+    }
+    if (!isLogIn && (!formData.firstName || !formData.lastName || !dateState)) {
+      toast.error("Please fill all the fields", { icon: "❗" });
+      return;
+    }
+
     setLoading(true);
-    onCaptchVerify();
-
-    const appVerifier = window.recaptchaVerifier;
-    const formatPh = "+" + ph;
-
-    signInWithPhoneNumber(auth, formatPh, appVerifier)
-      .then((confirmationResult) => {
-        window.confirmationResult = confirmationResult;
-        setLoading(false);
-        setShowOTP(true);
-        toast.success("OTP sended successfully!");
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
+    setError("");
+    if (!isLogIn) {
+      onCaptchVerify();
+      
+      const appVerifier = window.recaptchaVerifier;
+      const formatPh = "+" + ph;
+      
+      console.log(auth, formatPh, appVerifier);
+      signInWithPhoneNumber(auth, formatPh, appVerifier)
+        .then((confirmationResult) => {
+          window.confirmationResult = confirmationResult;
+          setLoading(false);
+          setShowOTP(true);
+          toast.success("OTP sended successfully!");
+        })
+        .catch((error) => {
+          console.log(error.message);
+          setLoading(false);
+          setError("Something went wrong, try again");
+        });
+    } else {
+      handleSubmit();
+    }
   }
   function onOTPVerify() {
     setLoading(true);
@@ -115,7 +136,7 @@ const CredentialsForm = ({ isModal }) => {
   }
   return (
     <div className="container">
-      <Toaster/>
+      <Toaster />
       {showOTP ? (
         <div className=" h-screen flex flex-col justify-center items-center px-2 ">
           <div className="w-full flex">
@@ -159,7 +180,19 @@ const CredentialsForm = ({ isModal }) => {
             {loading && <CgSpinner size={20} className="mt-1 animate-spin" />}
             <span>Verify OTP</span>
           </button>
-          {error && <button onClick={() => {setError(""); setShowOTP(false), setIsLogIn(false); setOtp("")}} className="text-red-500 "> {error}</button>}
+          {error && (
+            <button
+              onClick={() => {
+                setError("");
+                setShowOTP(false), setIsLogIn(false);
+                setOtp("");
+              }}
+              className="text-red-500 "
+            >
+              {" "}
+              {error}
+            </button>
+          )}
           <div className=" text-black">
             <div className=" ">
               Didn't reveive code?{" "}
@@ -210,7 +243,7 @@ const CredentialsForm = ({ isModal }) => {
             </div>
 
             <GoogleSignInButton />
-            <form onSubmit={(e) => onSignup(e)} >
+            <form onSubmit={(e) => onSignup(e)}>
               {/* <FacebookSignInButton/> */}
               <h2 className="text-center mt-1 ">OR</h2>
               <div className="login__inputs">
@@ -334,6 +367,15 @@ const CredentialsForm = ({ isModal }) => {
               >
                 Sign
               </button>
+              {error && (
+                <button
+                  onClick={() => setError("")}
+                  className="text-red-500 "
+                >
+                  {" "}
+                  {error}
+                </button>
+              )}
             </form>
 
             <div>
@@ -363,9 +405,16 @@ const CredentialsForm = ({ isModal }) => {
                   }}
                   className="login__forgot text-left"
                 >
-                  {isLogIn
-                    ? "Don't have an account? Sign Up"
-                    : <p>Already have an account? <span className="underline underline-offset-1 ">Log In</span></p>}
+                  {isLogIn ? (
+                    "Don't have an account? Sign Up"
+                  ) : (
+                    <p>
+                      Already have an account?{" "}
+                      <span className="underline underline-offset-1 ">
+                        Log In
+                      </span>
+                    </p>
+                  )}
                 </button>
                 <button
                   onClick={() => router.push("/")}
