@@ -1,18 +1,52 @@
 "use client"
 
+import { useEffect, useState } from "react";
+
 const ScrollButton = ({ rotationDegree, isObservedElementVisible, bgColor, textColor, refe }) => {
 
+  const [isHeroVisible, setIsHeroVisible] = useState(false)
+
+  useEffect(() => {
+    const hero = document.getElementById("Hero");
+    if (!hero) {
+      setIsHeroVisible(false)
+      return;
+    } else setIsHeroVisible(true);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // Update visibility state
+        setIsHeroVisible(entry.isIntersecting);
+      },
+      {
+        // You can customize the options here
+        root: null, // use the viewport
+        rootMargin: '0px',
+        threshold: 0.1, // trigger when 10% of the element is visible
+      }
+    );
+
+    observer.observe(hero);
+
+    // Cleanup observer on unmount
+    return () => {
+      observer.unobserve(hero);
+    };
+
+  },[])
+  
+  
   const scrollTo = () => {
     refe.current.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <button
-      disabled={isObservedElementVisible}
+      disabled={isObservedElementVisible || isHeroVisible }
       onClick={scrollTo}
       className={`fixed bottom-4 scrollButton right-4 max-sm:right-3 max-sm:bottom-10 rounded-full  
         ${`${bgColor} ${textColor}` || "staticBgColor fontColor"} p-2 ${
-        isObservedElementVisible ? "hide-button" : "show-button"
+        isObservedElementVisible || isHeroVisible ? "hide-button" : "show-button"
       }`}
     >
       <svg
