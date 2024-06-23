@@ -105,10 +105,10 @@ export default async function Home({ searchParams: { searchText, category } }) {
 
             <div className="w-1/2 max-sm:w-full ">
               <div className=" text-neutral-700 fontColor text-6xl font-bold mb-4 ">
-                <span className="dark:drop-shadow-[0_0_0.3rem_#ffffff70]">
+                <span className="dark:drop-shadow-[0_0_0.3rem_#ffffff70] drop-shadow-[0_0_0.3rem_#00000070]">
                   Elevate Your{" "}
                 </span>
-                <span className="text-primaryColor dark:drop-shadow-[0_0_0.3rem_#4bc0d970]">
+                <span className="text-primaryColor drop-shadow-[0_0_0.3rem_#4bc0d970]">
                   Mobile Experience
                 </span>
               </div>

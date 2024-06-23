@@ -76,7 +76,9 @@ const ProductCard = ({
   return (
     <Link
       href={isCollection ? `/collectionDetails/${id}` : `/itemsDetails/${id}`}
-      className="relative shadow-lg grow"
+      className="relative shadow-lg grow group"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {(isCollection || isOnSale) && (
         <SVGComponent className="absolute -top-2 -right-2 z-10" />
@@ -109,13 +111,15 @@ const ProductCard = ({
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-50"></div>
       <div className="absolute bottom-0 left-0 px-4 py-2 ">
         <h1 className="text-white ">
-          {isHovered
-            ? name.length > 25
-              ? name.slice(0, 23) + "..."
+          {name.slice(0, 15)}{name.length > 17 && !isHovered ? "..." : null}
+          <span className={` ${!isHovered ?  "": ""} group-hover:text-[16px] text-[0px] transition-all duration-75`}>{name.slice(15)}</span>
+          {/* {isHovered
+            ? name.length > 35
+              ? name.slice(0, 30) + "..."
               : name
             : name.length > 17
             ? name.slice(0, 15) + "..."
-            : name}
+            : name} */}
         </h1>
         {excerpt && (
           <h2 className=" text-gray-300 text-xs  ">

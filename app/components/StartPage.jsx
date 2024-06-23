@@ -270,7 +270,7 @@ const StartPage = ({
       <div className="w-full h-full flex items-start justify-around lg:justify-between flex-wrap gap-3 p-4 relative ">
         <Fade
           triggerOnce={true}
-          className="overflow-hidden rounded-lg h-[200px] max-sm:w-full max-md:w-1/2 max-lg:w-1/3 max-xl:w-1/4 w-1/5 max-w-[400px] grow hover:scale-[1.1] hover:z-10 relative duration-200"
+          className="overflow-hidden rounded-sm h-[200px] max-sm:w-full max-md:w-1/2 max-lg:w-1/3 max-xl:w-1/4 w-1/5 max-w-[400px] grow hover:scale-[1.1] hover:z-10 relative duration-200"
         >
           {productsState?.map(({ node }) => (
             <ProductCard
