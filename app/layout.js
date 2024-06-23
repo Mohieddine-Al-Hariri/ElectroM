@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google'
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/lib/auth"
 import Navbar from './components/Navbar'
-import { constructMetadata } from '@/lib/Utils'
+import { constructMetadata } from '@/lib/utils'
 
 const inter = Inter({ subsets: ['latin'] })
 
