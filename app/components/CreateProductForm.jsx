@@ -463,7 +463,7 @@ const CreateProductForm = ({ categoriesData, isDarkMode, collectionsData }) => {
     const updatedTagList = tagList.filter((tag) => tag !== tagToRemove);
     setTagList(updatedTagList);
   };
-
+console.log(files)
   async function uploadImage(image) {
     const storageRef = ref(
       storage,
